@@ -10,27 +10,19 @@ function FormStartSession() {
 
         <form class="login-form">
             <div class="form-group">
-            <label for="username" class="input-label">Usuario</label>
-            <div class="input-wrapper">
-                <input
-                type="text"
-                id="username"
-                placeholder="Ingresa tu usuario"
-                class="form-input"
-                />
-            </div>
+            <label for="username" class="input-label">Usuario
+                <div class="input-wrapper">
+                <input type="text" id="username" placeholder="Ingresa tu usuario" className="form-input"/>
+                </div>
+            </label>
             </div>
 
             <div class="form-group">
-            <label for="password" class="input-label">Contraseña</label>
-            <div class="input-wrapper">
-                <input
-                type="password"
-                id="password"
-                placeholder="Ingresa tu contraseña"
-                class="form-input"
-                />
+            <label for="password" class="input-label">Contraseña
+                <div class="input-wrapper">
+                <input type="password" id="password" placeholder="Ingresa tu contraseña" className="form-input"/>
             </div>
+            </label>
             </div>
 
             <div class="button-wrapper">

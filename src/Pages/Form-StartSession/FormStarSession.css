@@ -69,13 +69,13 @@
 }
 
 .form-input {
-  width: 100%;
+  width: 150%;
   padding: 15px;
   border-radius: 20px;
-  border: 2px solid #333;
+  border: 2px solid #33333396;
   font-family: "Hammersmith One", sans-serif;
   font-size: 30px;
-  color: #000;
+  color: #000 ;
 }
 
 .button-wrapper {
