@@ -4,26 +4,3 @@
   min-height: 100dvh;
   grid-template-rows: auto 1fr auto;
 }
-/* Header */
-.Header {
-  background-color: #007bff;
-  color: white;
-  padding: 20px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-/* Body */
-.body {
-  flex: 1;
-  padding: 20px;
-  background-color: #f9f9f9;
-}
-
-/* Footer */
-.footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 15px;
-}

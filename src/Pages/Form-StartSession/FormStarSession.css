@@ -1,0 +1,160 @@
+.page-container {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.content-wrapper {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  width: 100%;
+}
+
+.login-card {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  border-radius: 10px;
+  border: 3px solid #eee;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+  max-width: 640px;
+  width: 100%;
+}
+
+.login-title {
+  color: #000;
+  text-align: center;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  padding: 10px 0px;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.input-label {
+  color: #000;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.48px;
+}
+
+.input-wrapper {
+  width: 100%;
+}
+
+.form-input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 20px;
+  border: 2px solid #333;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 30px;
+  color: #000;
+}
+
+.button-wrapper {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.submit-button {
+  padding: 15px 20px;
+  border-radius: 20px;
+  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.11);
+  border: none;
+  color: #000;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.register-link {
+  color: #000;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.48px;
+  cursor: pointer;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+  text-decoration: none;
+  display: block;
+}
+
+@media (max-width: 991px) {
+  .login-card {
+    max-width: 500px;
+  }
+
+  .login-title {
+    font-size: 35px;
+  }
+
+  .form-input {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-card {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .login-title {
+    font-size: 30px;
+  }
+
+  .input-label {
+    font-size: 20px;
+  }
+
+  .form-input {
+    font-size: 20px;
+    padding: 12px;
+  }
+
+  .submit-button {
+    font-size: 20px;
+    padding: 12px 15px;
+  }
+
+  .register-link {
+    font-size: 20px;
+  }
+}

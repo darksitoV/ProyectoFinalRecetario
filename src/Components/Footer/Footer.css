@@ -1,0 +1,12 @@
+.Footer-conteiner {
+    border: solid 1px black;
+    background-color: rgba(237, 237, 237, 1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.Seccion1, .Seccion2{
+    border: solid 2px black;
+    text-align: center;
+    padding: 25px;
+}

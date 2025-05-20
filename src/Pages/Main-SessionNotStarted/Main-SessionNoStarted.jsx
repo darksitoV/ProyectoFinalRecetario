@@ -1,15 +1,20 @@
 import './Main-SessionNoStarted.css'
+import { useNavigate } from 'react-router-dom';
 
 function MainSessionNotStarted() {
+    const navigate = useNavigate();
+    const handleLoginClick = () => {
+        navigate('/login');
+    };
   return (
     <>
-    <main class="welcome-container">
-    <header class="welcome-content">
-        <h1 class="welcome-title">Bienvenido a Mi Recetario.com</h1>
-        <p class="welcome-subtitle">Accede a todas las funciones iniciando sesión</p>
-        <nav class="button-group">
-        <button class="action-button">Iniciar Sesion</button>
-        <button class="action-button">Registrarse</button>
+    <main className="welcome-container">
+    <header className="welcome-content">
+        <h1 className="welcome-title">Bienvenido a Mi Recetario.com</h1>
+        <p className="welcome-subtitle">Accede a todas las funciones iniciando sesión</p>
+        <nav className="button-group">
+        <button className="action-button" onClick={handleLoginClick}>Iniciar Sesion</button>
+        <button className="action-button">Registrarse</button>
         </nav>
     </header>
     </main>
