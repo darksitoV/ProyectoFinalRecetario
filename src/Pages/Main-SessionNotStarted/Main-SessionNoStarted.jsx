@@ -6,6 +6,9 @@ function MainSessionNotStarted() {
     const handleLoginClick = () => {
         navigate('/login');
     };
+    const handleRegistrationClick = () => {
+      navigate('/registration')
+    };
   return (
     <>
     <main className="welcome-container">
@@ -14,7 +17,7 @@ function MainSessionNotStarted() {
         <p className="welcome-subtitle">Accede a todas las funciones iniciando sesión</p>
         <nav className="button-group">
         <button className="action-button" onClick={handleLoginClick}>Iniciar Sesion</button>
-        <button className="action-button">Registrarse</button>
+        <button className="action-button" onClick={handleRegistrationClick}>Registrarse</button>
         </nav>
     </header>
     </main>

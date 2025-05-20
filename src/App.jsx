@@ -3,15 +3,26 @@ import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-rou
 import Header from './Components/Header/Header'
 import MainSessionNotStarted from './Pages/Main-SessionNotStarted/Main-SessionNoStarted'
 import Footer from './Components/Footer/Footer'
-import FormStartSession from './Pages/Form-StartSession/FormStarSession'
+import HomeSession from './Pages/Form- HomeSession/HomeSession';
+import Form_Registration from './Pages/Form-Registration/Form-Registration';
 
 function App() {
   return (
     <div className='App'>
       <Header />
       <Routes>
-        <Route path="/" element={<MainSessionNotStarted />} />
-        <Route path="/login" element={<FormStartSession />} />
+
+        <Route path="/" element={
+          <MainSessionNotStarted />
+          } />
+
+        <Route path="/login" element={
+          <HomeSession />
+          } />
+
+        <Route path='registration' element={
+          <Form_Registration/>
+          }/>
       </Routes>
       <Footer />
     </div>

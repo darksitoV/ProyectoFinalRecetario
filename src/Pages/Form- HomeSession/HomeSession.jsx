@@ -1,6 +1,6 @@
-import './FormStarSession.css'
+import './HomeSession.css'
 
-function FormStartSession() {
+function HomeSession() {
     return (
     <>
     <main class="page-container">
@@ -38,4 +38,4 @@ function FormStartSession() {
     );
 }
 
-export default FormStartSession;
+export default HomeSession;
