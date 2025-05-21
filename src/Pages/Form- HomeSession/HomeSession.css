@@ -1,4 +1,4 @@
-.page-container {
+.Home-page-container {
   display: flex;
   padding: 10px;
   flex-direction: column;
@@ -9,7 +9,7 @@
   background-color: #fff;
 }
 
-.content-wrapper {
+.Homecontent-wrapper {
   display: flex;
   padding: 10px;
   flex-direction: column;
@@ -20,7 +20,7 @@
   width: 100%;
 }
 
-.login-card {
+.Home-login-card {
   display: flex;
   padding: 20px;
   flex-direction: column;
@@ -29,25 +29,25 @@
   border-radius: 10px;
   border: 3px solid #eee;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
-  max-width: 640px;
+  max-width: 450px;
   width: 100%;
 }
 
-.login-title {
+.Home-login-title {
   color: #000;
   text-align: center;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 400;
   letter-spacing: 2px;
   padding: 10px 0px;
 }
 
-.login-form {
+.Home-login-form {
   width: 100%;
 }
 
-.form-group {
+.Home-form-group {
   display: flex;
   padding: 10px;
   flex-direction: column;
@@ -56,29 +56,30 @@
   width: 100%;
 }
 
-.input-label {
+.Home-input-label {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
+  width: 100%;
   letter-spacing: 0.48px;
 }
 
-.input-wrapper {
+.Home-input-wrapper {
   width: 100%;
 }
 
-.form-input {
-  width: 150%;
+.Home-form-input {
+  width: 100%;
   padding: 15px;
   border-radius: 20px;
   border: 2px solid #33333396;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 30px;
+  font-size: 15px;
   color: #000 ;
 }
 
-.button-wrapper {
+.Home-button-wrapper {
   display: flex;
   padding: 10px;
   flex-direction: column;
@@ -88,24 +89,24 @@
   width: 100%;
 }
 
-.submit-button {
-  padding: 15px 20px;
+.Home-submit-button {
+  padding: 10px 15px;
   border-radius: 20px;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.11);
   border: none;
   color: #000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 25px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.5px;
   cursor: pointer;
   background-color: #eee;
 }
 
-.register-link {
+.Home-register-link {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 24px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.48px;
   cursor: pointer;
@@ -117,44 +118,44 @@
 }
 
 @media (max-width: 991px) {
-  .login-card {
+  .Home-login-card {
     max-width: 500px;
   }
 
-  .login-title {
+  .Home-login-title {
     font-size: 35px;
   }
 
-  .form-input {
+  .Home-form-input {
     font-size: 25px;
   }
 }
 
 @media (max-width: 640px) {
-  .login-card {
+  .Home-login-card {
     max-width: 100%;
     padding: 15px;
   }
 
-  .login-title {
+  .Home-login-title {
     font-size: 30px;
   }
 
-  .input-label {
+  .Home-input-label {
     font-size: 20px;
   }
 
-  .form-input {
+  .Home-form-input {
     font-size: 20px;
     padding: 12px;
   }
 
-  .submit-button {
+  .Home-submit-button {
     font-size: 20px;
     padding: 12px 15px;
   }
 
-  .register-link {
+  .Home-register-link {
     font-size: 20px;
   }
 }

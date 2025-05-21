@@ -25,16 +25,16 @@
   margin: 0 auto;
 }
 
-.form-title {
+.registration-form-title {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 400;
   letter-spacing: 1.75px;
   padding: 10px 0px;
 }
 
-.form-group {
+.registration-form-group {
   display: grid;
   padding: 5px;
   flex-direction: column;
@@ -43,15 +43,15 @@
   width: 100%;
 }
 
-.form-label {
+.registration-form-label {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.4px;
 }
 
-.input-wrapper {
+.registration-input-wrapper {
   display: flex;
   width: 100%;
   padding: 5px;
@@ -62,7 +62,7 @@
   position: relative;
 }
 
-.form-input {
+.registration-form-input {
   width: 100%;
   padding: 10px 1px;
   border: none;
@@ -74,35 +74,21 @@
   opacity: 0.4;
 }
 
-.calendar-icon {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 15px;
-}
-
-.dropdown-icon {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  right: 15px;
-}
-
-.password-hint {
+.registration-password-hint {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
   font-size: 14px;
   opacity: 0.7;
 }
 
-.button-wrapper {
+.registration-button-wrapper {
   display: flex;
-  align-items: center;
+  justify-content: center;
   padding: 10px;
   width: 100%;
 }
 
-.submit-button {
+.registration-submit-button {
   padding: 15px 10px;
   border-radius: 20px;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.11);
@@ -110,7 +96,7 @@
   cursor: pointer;
   color: #000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.4px;
   background-color: #eee;
@@ -121,11 +107,11 @@
     padding: 15px;
   }
 
-  .form-title {
+  .registration-form-title {
     font-size: 30px;
   }
 
-  .input-wrapper {
+  .registration-input-wrapper {
     padding: 12px;
   }
 }
@@ -135,15 +121,15 @@
     padding: 10px;
   }
 
-  .form-title {
+  .registration-form-title {
     font-size: 25px;
   }
 
-  .input-wrapper {
+  .registration-input-wrapper {
     padding: 10px;
   }
 
-  .submit-button {
+  .registration-submit-button {
     padding: 12px 8px;
   }
 }

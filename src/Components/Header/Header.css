@@ -1,4 +1,4 @@
-.header {
+.HeaderNos {
   background-color: rgba(237, 237, 237, 1);
   display: flex;
   padding: 10px;
@@ -8,7 +8,7 @@
   justify-content: start;
 }
 
-.nav-container {
+.HeaderNos-nav-container {
   border-radius: 10px;
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -26,7 +26,7 @@
   flex: 1 1 0%;
 }
 
-.logo-section {
+.HeaderNos-logo-section {
   display: flex;
   min-width: 240px;
   padding: 5px;
@@ -37,7 +37,7 @@
   height: 100%;
 }
 
-.logo-wrapper {
+.HeaderNos-logo-wrapper {
   align-self: stretch;
   display: flex;
   margin: auto;
@@ -48,7 +48,7 @@
   width: 45px;
 }
 
-.logo-image {
+.HeaderNos-logo-image {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
@@ -57,7 +57,7 @@
   margin: auto;
 }
 
-.site-title {
+.HeaderNos-site-title {
   align-self: stretch;
   width: 191px;
   margin: auto;
@@ -65,12 +65,12 @@
   gap: 10px;
   overflow: hidden;
   font-family: "Hammersmith One", -apple-system, Roboto, Helvetica, sans-serif;
-  font-size: 24px;
+  font-size: 20px;
   color: rgba(51, 51, 51, 1);
   font-weight: 400;
 }
 
-.nav-links {
+.HeaderNos-nav-links {
   opacity: 50%;
   align-self: start;
   display: flex;
@@ -84,7 +84,7 @@
   flex: 1 1 0%;
 }
 
-.nav-link {
+.HeaderNos-nav-link {
   display: flex;
   padding: 0 5px;
   align-items: center;
@@ -94,7 +94,7 @@
   text-decoration: none;
 }
 
-.nav-icon-wrapper {
+.HeaderNos-nav-icon-wrapper {
   align-self: stretch;
   display: flex;
   margin: auto;
@@ -104,7 +104,7 @@
   width: 40px;
 }
 
-.nav-icon {
+.HeaderNos-nav-icon {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
@@ -113,7 +113,7 @@
   margin: auto;
 }
 
-.nav-text {
+.HeaderNos-nav-text {
   color: rgba(51, 51, 51, 1);
   font-size: 18px;
   font-family: "Hammersmith One", -apple-system, Roboto, Helvetica, sans-serif;
@@ -123,11 +123,11 @@
 }
 
 @media (max-width: 991px) {
-  .nav-container {
+  .HeaderNos-nav-container {
     max-width: 100%;
   }
 
-  .nav-links {
+  .HeaderNos-nav-links {
     max-width: 100%;
   }
 }

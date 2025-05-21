@@ -1,4 +1,4 @@
-.header {
+.BackHeader {
   background-color: rgba(237, 237, 237, 1);
   display: flex;
   padding: 10px;
@@ -8,7 +8,7 @@
   justify-content: start;
 }
 
-.nav-container {
+.BackHeader-nav-container {
   border-radius: 10px;
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -26,7 +26,7 @@
   flex: 1 1 0%;
 }
 
-.logo-section {
+.BackHeader-logo-section {
   display: flex;
   min-width: 240px;
   padding: 5px;
@@ -37,7 +37,7 @@
   height: 100%;
 }
 
-.logo-wrapper {
+.BackHeader-logo-wrapper {
   align-self: stretch;
   display: flex;
   margin: auto;
@@ -48,7 +48,7 @@
   width: 45px;
 }
 
-.logo-image {
+.BackHeader-logo-image {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
@@ -57,7 +57,7 @@
   margin: auto;
 }
 
-.site-title {
+.BackHeader-site-title {
   align-self: stretch;
   width: 191px;
   margin: auto;
@@ -65,17 +65,15 @@
   gap: 10px;
   overflow: hidden;
   font-family: "Hammersmith One", -apple-system, Roboto, Helvetica, sans-serif;
-  font-size: 24px;
+  font-size: 20px;
   color: rgba(51, 51, 51, 1);
   font-weight: 400;
 }
 
-.nav-links {
-  align-self: start;
+.BackHeader-nav-links {
   display: flex;
   min-width: 240px;
   padding: 10px;
-  align-items: start;
   gap: 25px;
   overflow: hidden;
   justify-content: end;
@@ -83,7 +81,7 @@
   flex: 1 1 0%;
 }
 
-.back-button {
+.BackHeader-back-button {
   display: flex;
   padding: 0 10px;
   justify-content: center;
@@ -95,22 +93,22 @@
   cursor: pointer;
 }
 
-.icon-wrapper {
+.BackHeader-icon-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.back-icon {
-  width: 35px;
-  height: 35px;
+.BackHeader-back-icon {
+  width: 25px;
+  height: 25px;
 }
 
-.back-text {
+.BackHeader-back-text {
   color: #333;
   text-align: center;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
 }
