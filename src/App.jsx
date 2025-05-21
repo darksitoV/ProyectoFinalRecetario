@@ -5,23 +5,33 @@ import MainSessionNotStarted from './Pages/Main-SessionNotStarted/Main-SessionNo
 import Footer from './Components/Footer/Footer'
 import HomeSession from './Pages/Form- HomeSession/HomeSession';
 import Form_Registration from './Pages/Form-Registration/Form-Registration';
+import Back_Header from './Components/Back-Header/Back-Header';
 
 function App() {
   return (
     <div className='App'>
-      <Header />
+
       <Routes>
 
         <Route path="/" element={
-          <MainSessionNotStarted />
+          <>
+          <Header/>
+          <MainSessionNotStarted/>
+          </>
           } />
 
         <Route path="/login" element={
-          <HomeSession />
+          <>
+          <Back_Header/>
+          <HomeSession/>
+          </>
           } />
 
         <Route path='registration' element={
+          <>
+          <Back_Header/>
           <Form_Registration/>
+          </>
           }/>
       </Routes>
       <Footer />
