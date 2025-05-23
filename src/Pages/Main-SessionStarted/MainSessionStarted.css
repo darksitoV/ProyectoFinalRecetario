@@ -1,0 +1,130 @@
+.dashboard-container {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  align-self: stretch;
+  border: 1px solid #030303;
+  background-color: #fff;
+}
+
+.dashboard-inner {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.welcome-message {
+  color: #333;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  padding: 10px;
+  gap: 10px;
+  align-self: stretch;
+  margin: 0;
+}
+
+.content-section {
+  display: flex;
+  padding: 10px 0px;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.action-grid {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  flex-wrap: wrap;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.card-content {
+  display: flex;
+  padding: 16px 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-icon {
+  display: flex;
+  width: 140px;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 70px;
+  height: 70px;
+  aspect-ratio: 1/1;
+}
+
+.card-title {
+  color: #000;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 991px) {
+  .action-card {
+    min-width: 45%;
+  }
+
+  .action-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .welcome-message {
+    font-size: 20px;
+  }
+
+  .action-grid {
+    flex-direction: column;
+  }
+
+  .action-card {
+    width: 100%;
+  }
+
+  .card-title {
+    font-size: 20px;
+  }
+}

@@ -1,9 +1,10 @@
-import './Header.css'
+import './HeaderSessionStarted.css'
 
 
-function Header() {
+function HeaderSessionStarted() {
     return(
         <>
+        
         <header class="site-header">
         <nav class="main-nav">
             <div class="brand-container">
@@ -60,9 +61,10 @@ function Header() {
             </div>
         </nav>
         </header>
+
         </>
     )
 };
 
 
-export default Header;
+export default HeaderSessionStarted;

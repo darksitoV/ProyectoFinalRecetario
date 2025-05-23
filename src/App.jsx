@@ -6,6 +6,8 @@ import Footer from './Components/Footer/Footer'
 import HomeSession from './Pages/Form- HomeSession/HomeSession';
 import Form_Registration from './Pages/Form-Registration/Form-Registration';
 import Back_Header from './Components/Back-Header/Back-Header';
+import HeaderSessionStarted from './Components/Session-Header/HeaderSessionStarted';
+import MainSessionStarted from './Pages/Main-SessionStarted/MainSessionStarted';
 
 function App() {
   return (
@@ -27,12 +29,20 @@ function App() {
           </>
           } />
 
-        <Route path='registration' element={
+        <Route path='/registration' element={
           <>
           <Back_Header/>
           <Form_Registration/>
           </>
           }/>
+
+        <Route path='/home' element={
+          <>
+          <HeaderSessionStarted/>
+          <MainSessionStarted/>
+          </>
+          }/>
+          
       </Routes>
       <Footer />
     </div>

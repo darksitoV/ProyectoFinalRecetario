@@ -1,4 +1,4 @@
-.HeaderNos {
+.site-header {
   background-color: rgba(237, 237, 237, 1);
   display: flex;
   padding: 10px;
@@ -8,14 +8,14 @@
   justify-content: start;
 }
 
-.HeaderNos-nav-container {
+.main-nav {
   border-radius: 10px;
-  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   align-self: stretch;
   display: flex;
   min-width: 240px;
+  margin: auto 0;
   width: 100%;
-  margin: auto;
   padding: 10px;
   align-items: stretch;
   gap: 10px;
@@ -25,7 +25,7 @@
   flex: 1 1 0%;
 }
 
-.HeaderNos-logo-section {
+.brand-container {
   display: flex;
   min-width: 240px;
   padding: 5px;
@@ -36,10 +36,10 @@
   height: 100%;
 }
 
-.HeaderNos-logo-wrapper {
+.logo-wrapper {
   align-self: stretch;
   display: flex;
-  margin: auto;
+  margin: auto 0;
   align-items: center;
   gap: 10px;
   overflow: hidden;
@@ -47,19 +47,19 @@
   width: 45px;
 }
 
-.HeaderNos-logo-image {
+.logo-image {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
   width: 45px;
   align-self: stretch;
-  margin: auto;
+  margin: auto 0;
 }
 
-.HeaderNos-site-title {
+.site-title {
   align-self: stretch;
   width: 191px;
-  margin: auto;
+  margin: auto 0;
   padding: 6px 0;
   gap: 10px;
   overflow: hidden;
@@ -69,8 +69,7 @@
   font-weight: 400;
 }
 
-.HeaderNos-nav-links {
-  opacity: 50%;
+.nav-links {
   align-self: start;
   display: flex;
   min-width: 240px;
@@ -83,7 +82,7 @@
   flex: 1 1 0%;
 }
 
-.HeaderNos-nav-link {
+.nav-item {
   display: flex;
   padding: 0 5px;
   align-items: center;
@@ -93,40 +92,79 @@
   text-decoration: none;
 }
 
-.HeaderNos-nav-icon-wrapper {
+.nav-icon-wrapper {
   align-self: stretch;
   display: flex;
-  margin: auto;
+  margin: auto 0;
   align-items: center;
   overflow: hidden;
   justify-content: center;
   width: 40px;
 }
 
-.HeaderNos-nav-icon {
+.nav-icon {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
   width: 40px;
   align-self: stretch;
-  margin: auto;
+  margin: auto 0;
 }
 
-.HeaderNos-nav-text {
+.nav-text {
   color: rgba(51, 51, 51, 1);
   font-size: 15px;
   font-family: "Hammersmith One", -apple-system, Roboto, Helvetica, sans-serif;
   font-weight: 400;
   align-self: stretch;
-  margin: auto;
+  margin: auto 0;
+}
+
+.user-profile {
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.25);
+  display: flex;
+  padding-left: 20px;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.user-name {
+  color: rgba(51, 51, 51, 1);
+  font-size: 15px;
+  font-family: "Hammersmith One", -apple-system, Roboto, Helvetica, sans-serif;
+  font-weight: 400;
+  text-align: center;
+  align-self: stretch;
+  margin: auto 0;
+}
+
+.user-icon-wrapper {
+  align-self: stretch;
+  display: flex;
+  margin: auto 0;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+}
+
+.user-icon {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 45px;
 }
 
 @media (max-width: 991px) {
-  .HeaderNos-nav-container {
+  .main-nav {
     max-width: 100%;
   }
 
-  .HeaderNos-nav-links {
+  .nav-links {
     max-width: 100%;
   }
 }

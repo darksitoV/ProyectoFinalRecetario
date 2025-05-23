@@ -18,7 +18,7 @@
 
 .welcome-title {
   font-family: "Hammersmith One", sans-serif;
-  font-size: 55px;
+  font-size: 45px;
   color: #333;
   text-align: center;
   letter-spacing: 5.5px;
@@ -28,7 +28,7 @@
 
 .welcome-subtitle {
   font-family: "Hammersmith One", sans-serif;
-  font-size: 32px;
+  font-size: 25px;
   color: rgba(0, 0, 0, 0.6);
   text-align: center;
   font-weight: 400;
@@ -46,7 +46,7 @@
 
 .action-button {
   font-family: "Hammersmith One", sans-serif;
-  font-size: 30px;
+  font-size: 20px;
   color: #333;
   padding: 10px;
   border-radius: 10px;

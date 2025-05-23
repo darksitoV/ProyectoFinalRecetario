@@ -79,6 +79,13 @@
   color: #000 ;
 }
 
+.Home-error-message {
+  padding-left: 10px;
+  padding-top: 10px;
+  font-size: 15px;
+  color: red;
+}
+
 .Home-button-wrapper {
   display: flex;
   padding: 10px;
