@@ -143,7 +143,18 @@ function Form_Registration() {
                     <p className="registration-error-message">La contraseña debe tener al menos 8 caracteres</p>
                 )}
             </div>
-
+            <div class="registration-form-group">
+                <label className="registration-form-label">Confirmar contraseña</label>
+                <div className="registration-input-wrapper">
+                <input type="password" placeholder="Crea una contraseña segura(min 8 caracteres)"
+                minLength={8} maxLength={30} 
+                class="registration-form-input" value={password} 
+                onChange={(e) => setPassword(e.target.value)}/>
+                </div>
+                {showPasswordError && (
+                    <p className="registration-error-message">La contraseña debe tener al menos 8 caracteres</p>
+                )}
+            </div>
 
             <div className="registration-button-wrapper">
                 <button type="submit"  className="registration-submit-button">Registrarme</button>
