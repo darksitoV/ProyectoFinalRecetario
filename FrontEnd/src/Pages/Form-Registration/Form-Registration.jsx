@@ -1,32 +1,36 @@
 import './Form-Registration.css'
-import React from 'react';
 import { useState } from 'react';
+import AlertModal from '../../Components/Modal/Modal.jsx';
 
 function Form_Registration() {
+    // Estado para mostrar el modal
+    const [openModal, setOpenModal] = useState(false);
+
+
     // Estado para el nombre y los apellidos
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [errorName, setErrorName] = useState({ firstName: "", lastName: "" });
+    const [first_name, setFirstName] = useState("");
+    const [last_name, setLastName] = useState("");
+    const [errorName, setErrorName] = useState({ first_name: "", last_name: "" });
 
     const handleNameSubmit = () => {
-        const newErrors = { firstName: "", lastName: "" };
+        const newErrors = { first_name: "", last_name: "" };
 
-        if (firstName.trim() === "") {
-        newErrors.firstName = "Porfavor ingresa tu nombre.";
+        if (first_name.trim() === "") {
+        newErrors.first_name = "Porfavor ingresa tu nombre.";
         }
-        if (lastName.trim() === "") {
-        newErrors.lastName = "Porfavor ingresa tus apellidos.";
+        if (last_name.trim() === "") {
+        newErrors.last_name = "Porfavor ingresa tus apellidos.";
         }
 
         setErrorName(newErrors);
-        return newErrors.firstName === "" && newErrors.lastName === "";
+        return newErrors.first_name === "" && newErrors.last_name === "";
     };
 
     // Estado para la ocupación
      const [occupation, setOccupation] = useState(""); // Guardar la ocupacion seleccionada
 
      // Estado para guardar la fecha de nacimiento
-    const [birthDate, setBirthDate] = useState(""); // Guardar la fecha de nacimiento seleccionada
+    const [birth_date, setBirthDate] = useState(""); // Guardar la fecha de nacimiento seleccionada
     const getMaxBirthDate = () => {
         const today = new Date();
         today.setFullYear(today.getFullYear() - 18);
@@ -37,12 +41,12 @@ function Form_Registration() {
     const minDate = "1910-01-01";
 
     // Estado para guardar el nombre de usuario
-    const [userName, setUserName] = useState("");
+    const [username, setUserName] = useState("");
     const [userNameError, setUserNameError] = useState("");
 
     // Validar username
     const handleUsernameSubmit = () => {
-        if (userName.trim() === "") {
+        if (username.trim() === "") {
         setUserNameError("El nombre de usuario no puede estar vacío");
         return false;
         }
@@ -82,36 +86,75 @@ function Form_Registration() {
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
     const validateEmail = (input) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!input) {
         setEmailError("El correo electrónico es requerido");
-        } else if (!emailRegex.test(input)) {
+        return false;
+    } else if (!emailRegex.test(input)) {
         setEmailError("Ingresa un correo electrónico válido");
-        } else {
+        return false;
+    } else {
         setEmailError("");
-        }
+        return true;
+    }
     };
-
     const handleEmailChange = (e) => {
         const value = e.target.value;
         setEmail(value);
         validateEmail(value);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const [serverError, setServerError] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
-        const namValid = handleNameSubmit();
-        const validateUserName = handleUsernameSubmit();
-        const passwordValid = handlePasswordSubmit();
 
-        if(namValid && passwordValid && validateUserName) {
-            console.log("Formulario enviado");
-        } else {
-            console.log("Formulario no válido");
-        }
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    setOpenModal(true); // Muestra el modal al enviar el formulario
+    setServerError(""); // Reinicia el mensaje de error
+    setSuccessMessage(""); // Reinicia el mensaje de éxito
+
+    // Validaciones síncronas
+    const isNameValid = handleNameSubmit();
+    const isUsernameValid = handleUsernameSubmit();
+    const isPasswordValid = handlePasswordSubmit();
+    const isEmailValid = validateEmail(email); // Asegúrate de que sea síncrona
+
+    if (!isNameValid || !isUsernameValid || !isPasswordValid || !isEmailValid) {
+        setServerError("Por favor, completa todos los campos correctamente.");
+        return; // Detiene el envío si hay errores
+    }
+
+    // Datos para enviar al servidor
+    const userData = {
+        first_name,
+        last_name,
+        birth_date,
+        username,
+        occupation,
+        password,
+        email,
     };
 
+    try {
+        const response = await fetch("http://localhost:3000/registration", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            setSuccessMessage("¡Registro exitoso! Redirigiendo...");
+        } else {
+            setServerError(data.error || "Error en el servidor. Intenta nuevamente.");
+        }
+    } catch (err) {
+        setServerError("Error de conexión. Verifica tu red.");
+        console.error("Error al enviar datos:", err);
+    }
+};
 
     return (
         <>
@@ -127,11 +170,11 @@ function Form_Registration() {
                     type="text"
                     placeholder="Ingresa tu nombre"
                     className="registration-form-input"
-                    value={firstName}
+                    value={first_name}
                     onChange={(e) => setFirstName(e.target.value)}
                 />
                 </div>
-                {errorName.firstName && <p className="registration-error-message">{errorName.firstName}</p>}
+                {errorName.first_name && <p className="registration-error-message">{errorName.first_name}</p>}
             </div>
 
             <div className="registration-form-group">
@@ -141,19 +184,19 @@ function Form_Registration() {
                     type="text"
                     placeholder="ingresa tus apellidos"
                     className="registration-form-input"
-                    value={lastName}
+                    value={last_name}
                     onChange={(e) => setLastName(e.target.value)}
                 />
                 </div>
-                {errorName.lastName && <p className="registration-error-message">{errorName.lastName}</p>}
+                {errorName.last_name && <p className="registration-error-message">{errorName.last_name}</p>}
             </div>
 
-            <div class="registration-form-group">
-                <label class="registration-form-label">Fecha de Nacimiento</label>
-                <div class="registration-input-wrapper">
+            <div className="registration-form-group">
+                <label className="registration-form-label">Fecha de Nacimiento</label>
+                <div className="registration-input-wrapper">
                     <input
                     type="date"
-                    value={birthDate}
+                    value={birth_date}
                     onChange={(e) => setBirthDate(e.target.value)}
                     min={minDate}
                     max={maxDate}
@@ -172,11 +215,12 @@ function Form_Registration() {
                 required
                 >
                 <option value="" disabled>Selecciona tu ocupación</option>
-                <option value="ama-de-casa">Ama de casa</option>
+                <option value="ama_de_casa">Ama de casa</option>
                 <option value="chef">Chef</option>
                 </select>
             </div>
             </div>
+
 
             <div className="registration-form-group">
             <label className="registration-form-label">Usuario</label>
@@ -185,7 +229,7 @@ function Form_Registration() {
                 type="text"
                 maxLength={20}
                 placeholder="Crea tu nombre de usuario (max 20 caracteres)"
-                value={userName}
+                value={username}
                 onChange={(e) => {
                     //Eliminar espacios en blanco
                     const valueNoSpaces = e.target.value.replace(/\s/g, "");
@@ -213,12 +257,12 @@ function Form_Registration() {
             {emailError && <p className="registration-error-message">{emailError}</p>}
             </div>
 
-            <div class="registration-form-group">
+            <div className="registration-form-group">
                 <label className="registration-form-label">Contraseña</label>
                 <div className="registration-input-wrapper">
                 <input type="password" placeholder="Crea una contraseña segura(min 8 caracteres)"
                 minLength={8} maxLength={30} 
-                class="registration-form-input" value={password} 
+                className="registration-form-input" value={password} 
                 onChange={(e) => setPassword(e.target.value)}/>
                 </div>
                 {showPasswordError && (
@@ -226,12 +270,12 @@ function Form_Registration() {
                 )}
             </div>
 
-            <div class="registration-form-group">
+            <div className="registration-form-group">
                 <label className="registration-form-label">Confirmar contraseña</label>
                 <div className="registration-input-wrapper">
                 <input type="password" placeholder="Confirma tu contraseña"
                 minLength={8} maxLength={30} 
-                class="registration-form-input" value={confirmPassword} 
+                className="registration-form-input" value={confirmPassword} 
                 onChange={(e) => setConfirmPassword(e.target.value)}/>
                 </div>
                 {showPasswordError && (
@@ -243,9 +287,23 @@ function Form_Registration() {
             </div>
 
             <div className="registration-button-wrapper">
-                <button type="submit"  className="registration-submit-button">Registrarme</button>
+            <button 
+            type="submit" 
+            className="registration-submit-button"
+            >
+            Registrarme
+            </button>
+
+            <AlertModal
+            open={openModal}
+            onClose={() => setOpenModal(false)}  // Corregido aquí
+            message={serverError || successMessage}
+            isError={!!serverError}
+            />
             </div>
+
             </form>
+
         </div>
         </main>
         </>

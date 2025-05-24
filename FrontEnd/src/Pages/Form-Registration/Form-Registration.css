@@ -82,7 +82,7 @@
 }
 
 .registration-button-wrapper {
-  display: flex;
+  display: grid;
   justify-content: center;
   padding: 10px;
   width: 100%;
@@ -105,6 +105,15 @@
 .registration-error-message {
   color: #ff0000;
   font-family: "Hammersmith One", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+}
+
+.registration-success-message {
+  color: #000;
+  font-family: "Hammersmith One", sans-serif;
+  padding-top: 20px;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.4px;
