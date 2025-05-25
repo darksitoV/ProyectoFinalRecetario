@@ -98,20 +98,19 @@ function Form_Registration() {
         return true;
     }
     };
-    const handleEmailChange = (e) => {
-        const value = e.target.value;
-        setEmail(value);
-        validateEmail(value);
-    };
 
     const [serverError, setServerError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
+    const [serverUsernameError, setServerUsernameError] = useState("");
+    const [serverEmailError, setServerEmailError] = useState("");
 
 
     const handleSubmit = async (e) => {
     e.preventDefault();
     setOpenModal(true); // Muestra el modal al enviar el formulario
     setServerError(""); // Reinicia el mensaje de error
+    setServerUsernameError(""); // Reinicia el mensaje de error de nombre de usuario
+    setServerEmailError(""); // Reinicia el mensaje de error de correo electrónico
     setSuccessMessage(""); // Reinicia el mensaje de éxito
 
     // Validaciones síncronas
@@ -148,6 +147,16 @@ function Form_Registration() {
         if (response.ok) {
             setSuccessMessage("¡Registro exitoso! Redirigiendo...");
         } else {
+            // Manejo de errores del servidor
+            if(response.status === 400) {
+                if(data.error === "Nombre de usuario ya existente") {
+                    setServerUsernameError("El nombre de usuario ya está en uso. Por favor, elige otro.");
+                } else if(data.error === "Email en uso") {
+                    setServerEmailError("El correo electrónico ya está en uso. Por favor, elige otro.");
+                } else {
+                    setServerError(data.error || "Error en el servidor. Intenta nuevamente.");
+                }
+            }
             setServerError(data.error || "Error en el servidor. Intenta nuevamente.");
         }
     } catch (err) {
@@ -221,40 +230,43 @@ function Form_Registration() {
             </div>
             </div>
 
+            <div className="registration-form-group">
+                <label className="registration-form-label">Usuario</label>
+                <div className="registration-input-wrapper">
+                    <input
+                        type="text"
+                        maxLength={20}
+                        placeholder="Crea tu nombre de usuario (max 20 caracteres)"
+                        value={username}
+                        onChange={(e) => {
+                            const valueNoSpaces = e.target.value.replace(/\s/g, "");
+                            setUserName(valueNoSpaces);
+                            setServerUsernameError(""); // Limpia el error al editar
+                        }}
+                        className={`registration-form-input ${userNameError || serverUsernameError ? "input-error" : ""}`}
+                    />
+                </div>
+                {userNameError && <p className="registration-error-message">{userNameError}</p>}
+                {serverUsernameError && <p className="registration-error-message">{serverUsernameError}</p>}
+            </div>
 
             <div className="registration-form-group">
-            <label className="registration-form-label">Usuario</label>
-            <div className="registration-input-wrapper">
-                <input
-                type="text"
-                maxLength={20}
-                placeholder="Crea tu nombre de usuario (max 20 caracteres)"
-                value={username}
-                onChange={(e) => {
-                    //Eliminar espacios en blanco
-                    const valueNoSpaces = e.target.value.replace(/\s/g, "");
-                    setUserName(valueNoSpaces);
-                }}
-                className="registration-form-input"
-                />
-            </div>
-            {userNameError && <p className="registration-error-message">{userNameError}</p>}
-            </div>
-
-
-            <div className="registration-form-group">
-            <label className="registration-form-label">Correo Electrónico</label>
-            <div className="registration-input-wrapper">
-                <input
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                onBlur={() => validateEmail(email)}
-                placeholder="Ingresa tu correo electrónico"
-                className={`registration-form-input ${emailError ? "input-error" : ""}`}
-                />
-            </div>
-            {emailError && <p className="registration-error-message">{emailError}</p>}
+                <label className="registration-form-label">Correo Electrónico</label>
+                <div className="registration-input-wrapper">
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setServerEmailError("");
+                        }}
+                        onBlur={() => validateEmail(email)}
+                        placeholder="Ingresa tu correo electrónico"
+                        className={`registration-form-input ${emailError || serverEmailError ? "input-error" : ""}`}
+                    />
+                </div>
+                {emailError && <p className="registration-error-message">{emailError}</p>}
+                {serverEmailError && <p className="registration-error-message">{serverEmailError}</p>}
             </div>
 
             <div className="registration-form-group">

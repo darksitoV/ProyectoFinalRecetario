@@ -4,7 +4,6 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-// Estilo del modal (puedes personalizarlo)
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,15 +19,18 @@ const style = {
 export default function AlertModal({ open, onClose, message, isError }) {
   const navigate = useNavigate();
 
-  const handleCloseAndRedirect = () => {
-    onClose(); // Cierra el modal
-    navigate('/login'); // Redirige a la página deseada
+  const handleAction = () => {
+    onClose(); // Cierra el modal en ambos casos
+    if (!isError) {
+      navigate('/login'); // Redirige solo si no hay error
+    }
+    // Si hay error (isError=true), no hace nada más (el usuario se queda en la misma página)
   };
 
   return (
     <Modal
       open={open}
-      onClose={onClose} // Esto permite cerrar el modal haciendo clic fuera de él
+      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -45,7 +47,7 @@ export default function AlertModal({ open, onClose, message, isError }) {
           {message}
         </Typography>
         <Button 
-          onClick={handleCloseAndRedirect} // Usa la nueva función
+          onClick={handleAction} // Usa la función unificada
           variant="contained"
           color={isError ? "error" : "success"}
           sx={{ mt: 3 }}
