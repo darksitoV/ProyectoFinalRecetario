@@ -1,0 +1,2 @@
+"usuario":"JuanPro23","nombre_usuario":"Jose Miguel","apellido_usuario":"Guerrero Romero","fecha_nacimiento":"2002/08/24","correo":"josemiguelpreparatoria@gmail.com","contraseña":"123456789","rol":"Chef"
+"nombre":"Brocoli","cantidad":1.510,"unidad_medida":"kg","costo":50.90
