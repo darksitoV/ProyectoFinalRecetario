@@ -2,7 +2,7 @@
   padding: 20px;
   display: flex;
   justify-content: center;
-  background-color: #fff;
+  background-color: #939292;
 }
 
 .registration-wrapper {
@@ -19,27 +19,45 @@
   gap: 15px;
   border-radius: 10px;
   border: 3px solid #eee;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  box-shadow: 0px 0px 7px 0px rgb(255, 255, 255);
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
 }
 
+.registration-form-title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .registration-form-title {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
+  text-align: center;
+  width: 100%;
   font-size: 25px;
   font-weight: 400;
   letter-spacing: 1.75px;
   padding: 10px 0px;
 }
 
+.registration-input-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  gap: 15px;
+}
+
 .registration-form-group {
   display: grid;
-  padding: 5px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  align-content: center;
+  gap: 2px;
+  padding-bottom: 10px;
   width: 100%;
 }
 
@@ -57,19 +75,19 @@
   padding: 5px;
   align-items: center;
   gap: 10px;
-  border-radius: 20px;
-  border: 2px solid #333;
+  border-radius: 15px;
+  border: 2px solid #33333329;
   position: relative;
 }
 
 .registration-form-input {
   width: 100%;
-  padding: 10px 1px;
+  padding: 1px 5px;
   border: none;
   outline: none;
   background: transparent;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   color: #000;
   opacity: 0.4;
 }
@@ -81,31 +99,51 @@
   opacity: 0.7;
 }
 
-.registration-button-wrapper {
-  display: grid;
+
+.optional-button-wrapper {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
   padding: 10px;
+}
+
+.registration-button-wrapper, .back-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
 .registration-submit-button {
-  padding: 15px 10px;
-  border-radius: 20px;
-  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.11);
-  border: none;
-  cursor: pointer;
-  color: #000;
-  font-family: "Hammersmith One", sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0.4px;
-  background-color: #eee;
+  padding: 12.5px 30px;
+  border: 0;
+  border-radius: 100px;
+  background-color: #2ba8fb;
+  color: #ffffff;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.registration-submit-button:hover {
+  background-color: #6fc5ff;
+  box-shadow: 0 0 20px #6fc5ff50;
+  transform: scale(1.1);
+}
+
+.registration-submit-button:active {
+  background-color: #3d94cf;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
 }
 
 .registration-error-message {
   color: #ff0000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 0.4px;
 }

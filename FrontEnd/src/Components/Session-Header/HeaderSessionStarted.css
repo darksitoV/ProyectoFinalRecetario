@@ -47,11 +47,11 @@
   width: 45px;
 }
 
-.logo-image {
+.logo-image-HeaderSessionStarted {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
-  width: 45px;
+  width: 30px;
   align-self: stretch;
   margin: auto 0;
 }
@@ -159,7 +159,7 @@
   width: 45px;
 }
 
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
   .main-nav {
     max-width: 100%;
   }
@@ -167,4 +167,4 @@
   .nav-links {
     max-width: 100%;
   }
-}
+} */

@@ -12,7 +12,7 @@ function HeaderSessionStarted() {
                 <img
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/a003168fea05fe300258f75f28ec9682651fefe6?placeholderIfAbsent=true&apiKey=d125c4bf0ab14f11b1e2846a04664086"
                 alt="Site Logo"
-                class="logo-image"
+                class="logo-image-HeaderSessionStarted"
                 />
             </div>
             <h1 class="site-title">Mi Recetario.com</h1>

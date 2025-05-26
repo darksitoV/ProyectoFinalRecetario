@@ -37,10 +37,10 @@
   color: #000;
   text-align: center;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 400;
   letter-spacing: 2px;
-  padding: 10px 0px;
+  width: 100%;
 }
 
 .Home-login-form {
@@ -59,7 +59,7 @@
 .Home-input-label {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   width: 100%;
   letter-spacing: 0.48px;
@@ -75,11 +75,12 @@
   border-radius: 20px;
   border: 2px solid #33333396;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   color: #000 ;
 }
 
 .Home-error-message {
+  font-family: "Hammersmith One", sans-serif;
   padding-left: 10px;
   padding-top: 10px;
   font-size: 15px;
@@ -89,7 +90,6 @@
 .Home-button-wrapper {
   display: flex;
   padding: 10px;
-  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
@@ -113,6 +113,7 @@
 .Home-register-link {
   color: #000;
   font-family: "Hammersmith One", sans-serif;
+  text-align: center;
   font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.48px;
@@ -129,12 +130,8 @@
     max-width: 500px;
   }
 
-  .Home-login-title {
-    font-size: 35px;
-  }
-
   .Home-form-input {
-    font-size: 25px;
+    font-size: 18px;
   }
 }
 
@@ -142,10 +139,6 @@
   .Home-login-card {
     max-width: 100%;
     padding: 15px;
-  }
-
-  .Home-login-title {
-    font-size: 30px;
   }
 
   .Home-input-label {

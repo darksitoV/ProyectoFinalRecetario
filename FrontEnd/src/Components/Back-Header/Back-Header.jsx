@@ -1,12 +1,6 @@
 import './Back-Header.css'
-import { useNavigate } from 'react-router-dom';
 
 function Back_Header() {
-    const navigate = useNavigate();
-    
-    const handleBackClick = () => {
-        navigate('/');
-    }
 
     return (
         <>
@@ -22,14 +16,6 @@ function Back_Header() {
             </div>
             <h1 className="BackHeader-site-title">Mi Recetario.com</h1>
             </div>
-            <nav className="BackHeader-nav-links">
-            <button className="BackHeader-back-button" onClick={handleBackClick}>
-                <span className="BackHeader-back-text">Volver</span>
-                <span className="BackHeader-icon-wrapper">
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/13d0ff668dae6d93692b1b6dda9b54d74e388e12" alt="Back Icon" className="BackHeader-back-icon" />
-                </span>
-            </button>
-            </nav>
         </nav>
         </header>
         </>
