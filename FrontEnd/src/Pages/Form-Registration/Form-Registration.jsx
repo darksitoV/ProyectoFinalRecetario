@@ -131,17 +131,17 @@ function Form_Registration() {
 
     // Datos para enviar al servidor
     const userData = {
-        first_name,
-        last_name,
-        birth_date,
-        username,
-        occupation,
-        password,
-        email
+        nombre_usuario:first_name,
+        apellido_usuario:last_name,
+        fecha_nacimiento:birth_date,
+        usuario:username,
+        rol:occupation,
+        contraseña:password,
+        correo:email
     };
 
     try {
-        const response = await fetch("http://localhost:3000/registration", {
+        const response = await fetch("http://localhost:3000/agregar_usuario", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
@@ -154,9 +154,9 @@ function Form_Registration() {
         } else {
             // Manejo de errores del servidor
             if(response.status === 400) {
-                if(data.error === "Nombre de usuario ya existente") {
+                if(data.error === "El usuario ya está registrado") {
                     setServerUsernameError("El nombre de usuario ya está en uso. Por favor, elige otro.");
-                } else if(data.error === "Email en uso") {
+                } else if(data.error === "El correo ya está registrado") {
                     setServerEmailError("El correo electrónico ya está en uso. Por favor, elige otro.");
                 } else {
                     setServerError(data.error || "Error en el servidor. Intenta nuevamente.");
