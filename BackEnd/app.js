@@ -6,7 +6,7 @@ const Ingredientes=require('./models/Ingredientes')
 const Recetas=require('./models/Recetas')
 const Receta_Ingredientes=require('./models/Receta_Ingredientes')
 const app = express()
-# const puerto = 3000
+// const puerto = 3000
 
 app.use(bodyParser.json())
 
