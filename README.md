@@ -3,18 +3,16 @@ Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos
 
 ## Tecnologias Utilizadas 
 
-* React 
-* NodeJS
+* React (FrontEnd)
+* NodeJS (BackEnd)
 
-* Vite
-* Express
-* Sequelize
-* PostgreSql
+* Vite (Generar proyecto)
+* Express (Generar Proyecto)
+* Sequelize (ORM para la base de datos)
+* PostgreSql (Base de datos)
 
 ## Servidores + Hosts
-* Aiven.io
-* Firebase
-* Heroku (backend + frontend)
-* Github Pages - Vercel - Netlify( Front End)
+* Aiven.io (Servidor de base de datos)
+* Firebase Host (FrontEnd)
 * Render (BackEnd)
-* UptimeRobot
+* UptimeRobot (Mantener Alive la api)
