@@ -1,0 +1,162 @@
+.title-container {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  align-items: start;
+  gap: 10px;
+  overflow: hidden;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  min-width: 240px;
+  padding: 10px;
+  overflow: hidden;
+  font-family: 'Hammersmith One', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 32px;
+  color: #000;
+  font-weight: 400;
+  flex: 1;
+}
+
+.user-navigation {
+  display: flex;
+  min-width: 240px;
+  padding: 10px;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1;
+}
+
+.user-icon {
+  display: flex;
+  margin: auto 0;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+}
+
+.content-IngredientForm {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  font-family: 'Hammersmith One', -apple-system, Roboto, Helvetica, sans-serif;
+  color: #000;
+  font-weight: 400;
+  height: 100%;
+  border: solid black 1px;
+}
+
+.ingredient-form {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 10px;
+  border: 3px solid #eee;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 7px 0px rgb(255, 255, 255);
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form-title {
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  font-size: 20px;
+  letter-spacing: 1.2px;
+}
+
+.RegisterIngredient-form-group {
+  display: grid;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
+}
+
+.RegisterIngredient-form-label {
+  color: #000;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+}
+
+.RegistrationIngredient-input-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 15px;
+  border: 2px solid #33333329;
+  position: relative;
+}
+
+.RegisterIngredient-form-input {
+  width: 100%;
+  padding: 1px 5px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 12px;
+  color: #000;
+  opacity: 0.4;
+}
+
+.RegisterIngredient-form-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  letter-spacing: 0.4px;
+}
+
+.RegisterIngredient-button {
+  padding: 12.5px 30px;
+  border: 0;
+  border-radius: 100px;
+  background-color: #2ba8fb;
+  color: #ffffff;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.RegisterIngredient-button:hover {
+  background-color: #6fc5ff;
+  box-shadow: 0 0 20px #6fc5ff50;
+  transform: scale(1.1);
+}
+
+.RegisterIngredient-button:active {
+  background-color: #3d94cf;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}
+
+.secondary-content {
+  display: flex;
+  min-width: 240px;
+  width: 682px;
+  flex-shrink: 1;
+  height: 669px;
+  gap: 10px;
+  flex: 1;
+}

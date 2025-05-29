@@ -8,6 +8,7 @@ import Form_Registration from './Pages/Form-Registration/Form-Registration';
 import Back_Header from './Components/Back-Header/Back-Header';
 import HeaderSessionStarted from './Components/Session-Header/HeaderSessionStarted';
 import MainSessionStarted from './Pages/Main-SessionStarted/MainSessionStarted';
+import RegisterIngredients from './Pages/Form-RegisterIngredients/RegisterIngredients';
 
 function App() {
   return (
@@ -40,6 +41,13 @@ function App() {
           <>
           <HeaderSessionStarted/>
           <MainSessionStarted/>
+          </>
+          }/>
+
+        <Route path='/home/register_ingredients' element={
+          <>
+          <HeaderSessionStarted/>
+          <RegisterIngredients/>
           </>
           }/>
           
