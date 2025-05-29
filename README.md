@@ -13,6 +13,6 @@ Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos
 
 ## Servidores + Hosts
 * **Aiven.io** (Servidor de base de datos)
-* **Firebase Host** (FrontEnd)
-* **Render** (BackEnd)
+* **Firebase Host** (Host FrontEnd)
+* **Render** (Host BackEnd)
 * **UptimeRobot** (Mantener Alive la api)
