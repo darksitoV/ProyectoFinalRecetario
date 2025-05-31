@@ -6,8 +6,10 @@ const Ingredientes=require('./models/Ingredientes')
 const Recetas=require('./models/Recetas')
 const Receta_Ingredientes=require('./models/Receta_Ingredientes')
 const app = express()
+const cors = require('cors')
 const puerto = 3000
 
+app.use(cors());
 app.use(bodyParser.json())
 
 app.listen(puerto, () => {
@@ -81,7 +83,7 @@ app.post('/agregar_usuario', async (req, res) => {
         // 4. Crear usuario
         const nuevoUsuario = await Usuarios.create({usuario,nombre_usuario,apellido_usuario,fecha_nacimiento,correo,contraseña,rol});
         // 5. Respuesta sin datos sensibles
-        res.status(201).json({
+         return res.status(201).json({
             usuario,nombre_usuario,correo,rol,
             mensaje: "Usuario registrado exitosamente"
         });
