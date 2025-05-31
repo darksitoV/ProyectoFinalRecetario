@@ -6,15 +6,15 @@ const Ingredientes=require('./models/Ingredientes')
 const Recetas=require('./models/Recetas')
 const Receta_Ingredientes=require('./models/Receta_Ingredientes')
 const app = express()
-const cors = require('cors')
 const puerto = 3000
 
 app.use(cors());
 app.use(bodyParser.json())
 
-app.listen(puerto, () => {
-    console.log('servicio iniciado')
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
 
 app.post('/login', async (req, res) => {
     try {
