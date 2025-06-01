@@ -167,19 +167,31 @@ app.post('/:id_usuario/gestion_ingredientes', async (req, res) => {
     }
 });
 
-app.get('/ver_ingredientes',async (req,res)=>{
-    try {
-        ingredientes=await Ingredientes.findAll({
-            attributes:['nombre','cantidad','unidad_medida','costo']
-        });
-        res.send(ingredientes);
-    } catch (error) {
-        console.error('Error al mostrar ingrediente:', error);
-        res.status(500).json({ 
-            error: 'Error interno del servidor' 
-        });
+// Ver ingredientes de un usuario específico
+app.get('/:id/ver_ingredientes',async (req,res)=>{
+  try {
+    const { id } = req.params;
+    
+    // Buscar ingredientes del usuario
+    const ingredientes = await Ingredientes.findAll({
+      where: { id_usuario: id }
+    });
+    
+    if (ingredientes.length === 0) {
+      return res.status(404).json({ 
+        mensaje: "No se encontraron ingredientes para este usuario" 
+      });
     }
+    
+    return res.json(ingredientes);
+  } catch (error) {
+    console.error('Error al obtener ingredientes:', error);
+    return res.status(500).json({ 
+      error: 'Error interno del servidor' 
+    });
+  }
 })
+
 // Crear una nueva receta con ingredientes
 app.post('/recetas', async (req, res) => {
   try {

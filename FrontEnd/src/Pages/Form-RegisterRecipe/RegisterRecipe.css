@@ -1,0 +1,99 @@
+.nueva-receta-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.nueva-receta-container h1 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.ingredientes-list {
+  margin-bottom: 15px;
+}
+
+.ingrediente-item {
+  background: #f5f5f5;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.nuevo-ingrediente {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.nuevo-ingrediente button {
+  grid-column: span 4;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nuevo-ingrediente button:hover {
+  background-color: #45a049;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.form-actions button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #2196F3;
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+  background-color: #0b7dda;
+}
+
+.form-actions button.secondary {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.form-actions button.secondary:hover {
+  background-color: #ddd;
+}

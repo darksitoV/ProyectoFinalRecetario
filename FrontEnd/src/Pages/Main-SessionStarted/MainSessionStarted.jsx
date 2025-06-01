@@ -9,7 +9,7 @@ function MainSessionStarted() {
 
     return (
         <>
-            <main class="dashboard-container">
+            <main class="conteiner_main">
             <div class="dashboard-inner">
                 <header>
                 <h1 class="welcome-message">¡Hola, {user.username}! ¿Qué cocinaremos hoy?</h1>
@@ -35,7 +35,7 @@ function MainSessionStarted() {
                     </div>
 
                     <div className="action-card">
-                        <Link to="/crear-receta" className="card-link">
+                        <Link to="register_recipe" className="card-link">
                         <div className="bg">
                             <div className="card-content">
                             <div className="card-icon">
