@@ -1,232 +1,201 @@
 import './RegisterRecipe.css';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../AuthContext';
-
 
 function RegisterRecipe() {
   const { user } = useAuth();
+
   const [receta, setReceta] = useState({
     nombre: '',
     tiempoPreparacion: 30,
     ingredientes: [],
     instrucciones: '',
-    precioEstimado: 0.00
+    precioEstimado: 0
   });
+
+  const [ingredientesDB, setIngredientesDB] = useState([]);
+  const [busqueda, setBusqueda] = useState('');
+  const [mostrarLista, setMostrarLista] = useState(false);
+
   const [nuevoIngrediente, setNuevoIngrediente] = useState({
     nombre: '',
     unidad_medida: '',
     cantidad: '',
     costo: ''
   });
-  const [ingredientesDB, setIngredientesDB] = useState([]);
-  const [mostrarListaIngredientes, setMostrarListaIngredientes] = useState(false);
-  const [busquedaIngrediente, setBusquedaIngrediente] = useState('');
 
-  // Simulamos la carga de ingredientes desde la BD
   useEffect(() => {
-    // Aquí deberías hacer una llamada a tu API para obtener los ingredientes
-    // Esto es un ejemplo con datos mock
-    const fetchIngredientes = async () => {
-      // Reemplaza esto con tu llamada real a la API
-      const res = await fetch(`http://localhost:3000/${user.id}/ver_ingredientes`,{
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
-      });
-
-        const mockIngredientes = await res.json();
-
-      setIngredientesDB(mockIngredientes);
+    const obtenerIngredientes = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/${user.id}/ver_ingredientes`);
+        const data = await res.json();
+        setIngredientesDB(data);
+      } catch (error) {
+        console.error('Error al obtener ingredientes:', error);
+      }
     };
 
-    fetchIngredientes();
+    obtenerIngredientes();
   }, [user.id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setReceta({
-      ...receta,
-      [name]: value
-    });
-  };
+  const ingredientesFiltrados = ingredientesDB.filter((ing) =>
+    ing.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
-  const handleIngredienteChange = (e) => {
-    const { name, value } = e.target;
+  const seleccionarIngrediente = (ing) => {
     setNuevoIngrediente({
-      ...nuevoIngrediente,
-      [name]: value
+      nombre: ing.nombre,
+      unidad_medida: ing.unidad_medida,
+      cantidad: '',
+      costo: ing.costo
     });
-  };
-
-  const seleccionarIngrediente = (ingrediente) => {
-    setNuevoIngrediente({
-      ...nuevoIngrediente,
-      nombre: ingrediente.nombre,
-      unidad_medida: ingrediente.unidad_medida,
-      costo: ingrediente.costo
-    });
-    setMostrarListaIngredientes(false);
-    setBusquedaIngrediente('');
+    setBusqueda(ing.nombre);
+    setMostrarLista(false);
   };
 
   const agregarIngrediente = () => {
-    if (nuevoIngrediente.nombre && nuevoIngrediente.cantidad && nuevoIngrediente.unidad_medida) {
-      setReceta({
-        ...receta,
-        ingredientes: [...receta.ingredientes, nuevoIngrediente],
-        precioEstimado: receta.precioEstimado + (parseFloat(nuevoIngrediente.costo) * parseFloat(nuevoIngrediente.cantidad))});
-      setNuevoIngrediente({
-        nombre: '',
-        unidad_medida: '',
-        cantidad: '',
-        costo: ''
-      });
-    }
+    const cantidad = parseFloat(nuevoIngrediente.cantidad);
+    const costo = parseFloat(nuevoIngrediente.costo);
+    if (!cantidad || !nuevoIngrediente.nombre) return;
+
+    const nuevo = {
+      ...nuevoIngrediente,
+      cantidad: cantidad.toString()
+    };
+
+    setReceta((prev) => ({
+      ...prev,
+      ingredientes: [...prev.ingredientes, nuevo],
+      precioEstimado: prev.precioEstimado + cantidad * costo
+    }));
+
+    setNuevoIngrediente({ nombre: '', unidad_medida: '', cantidad: '', costo: '' });
+    setBusqueda('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para guardar la receta
-    console.log('Receta guardada:', receta);
+    console.log('Receta final:', receta);
+    // Aquí podrías hacer un fetch POST al backend
   };
 
-  const ingredientesFiltrados = ingredientesDB.filter(ing =>
-    ing.nombre.toLowerCase().includes(busquedaIngrediente.toLowerCase())
-  );
-
   return (
-    <div className="nueva-receta-container">
-      <h1>Nueva Receta</h1>
-      
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="nombre">Nombre de la Receta</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            value={receta.nombre}
-            onChange={handleInputChange}
-            placeholder="Ej: Pastel de chocolate"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="tiempoPreparacion">Tiempo de preparación (minutos)</label>
-          <input
-            type="number"
-            id="tiempoPreparacion"
-            name="tiempoPreparacion"
-            value={receta.tiempoPreparacion}
-            onChange={handleInputChange}
-            min="1"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <h3>Ingredientes</h3>
-          <div className="ingredientes-list">
-            {receta.ingredientes.map((ing, index) => (
-              <div key={index} className="ingrediente-item">
-                <span>{ing.cantidad} {ing.unidad_medida} de {ing.nombre} (${(parseFloat(ing.costo) * parseFloat(ing.cantidad)).toFixed(2)})</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="nuevo-ingrediente">
-            <div className="ingrediente-autocomplete">
-              <input
-                type="text"
-                name="nombre"
-                value={nuevoIngrediente.nombre}
-                onChange={(e) => {
-                  setNuevoIngrediente({...nuevoIngrediente, nombre: e.target.value});
-                  setBusquedaIngrediente(e.target.value);
-                }}
-                onFocus={() => setMostrarListaIngredientes(true)}
-                placeholder="Buscar ingrediente..."
-                required
-              />
-              {mostrarListaIngredientes && (
-                <div className="lista-ingredientes">
-                  {ingredientesFiltrados.map(ing => (
-                    <div 
-                      key={ing.id} 
-                      className="ingrediente-option"
-                      onClick={() => seleccionarIngrediente(ing)}
-                    >
-                      {ing.nombre} ({ing.unidad_medida}) - ${ing.consto}/unidad
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
+    <>
+      <div className='container_new_recipe'>
+        <h1 className='conteiner_title_newRecipe'>Nueva Receta</h1>
+        <form className='conteiner_form_newRecipe' onSubmit={handleSubmit}>
+          <div className='form_group'>
+            <label>Nombre de la receta:</label>
             <input
               type="text"
-              name="unidad"
-              value={nuevoIngrediente.unidad_medida}
-              onChange={handleIngredienteChange}
-              placeholder="Unidad"
+              className='input_form_newRecipe'
+              value={receta.nombre}
+              onChange={(e) => setReceta({ ...receta, nombre: e.target.value })}
               required
-              disabled
             />
-
-            <input
-              type="number"
-              name="cantidad"
-              value={nuevoIngrediente.cantidad}
-              onChange={handleIngredienteChange}
-              placeholder="Cantidad"
-              required
-              step="0.01"
-              min="0.01"
-            />
-
-            <input
-              type="number"
-              name="precio"
-              value={nuevoIngrediente.costo}
-              onChange={handleIngredienteChange}
-              placeholder="Precio unitario"
-              step="0.01"
-              min="0"
-              disabled
-            />
-
-            <button type="button" onClick={agregarIngrediente}>
-              + Añadir ingrediente
-            </button>
           </div>
-        </div>
 
-        <div className="form-group">
-          <label>Precio Estimado</label>
-          <span>${receta.precioEstimado.toFixed(2)}</span>
-        </div>
+          <div className='form_group'>
+            <label>Tiempo de preparación (min):</label>
+            <input
+              type="number"
+              className='input_form_newRecipe'
+              value={receta.tiempoPreparacion}
+              onChange={(e) => setReceta({ ...receta, tiempoPreparacion: e.target.value })}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="instrucciones">Instrucciones</label>
-          <textarea
-            id="instrucciones"
-            name="instrucciones"
-            value={receta.instrucciones}
-            onChange={handleInputChange}
-            rows="6"
-            required
-          />
-        </div>
+          <div className='form_group'>
+            <label>Ingredientes</label>
+            <input
+              type="text"
+              className='input_form_newRecipe'
+              value={busqueda}
+              onChange={(e) => {
+                setBusqueda(e.target.value);
+                setMostrarLista(true);
+              }}
+              placeholder="Buscar ingrediente..."
+            />
 
-        <div className="form-actions">
+            {mostrarLista && busqueda && (
+              <div style={{ border: '1px solid #ccc', maxHeight: 100, overflowY: 'auto' }}>
+                {ingredientesFiltrados.map((ing, i) => (
+                  <div
+                    key={i}
+                    style={{ cursor: 'pointer', padding: '5px' }}
+                    onClick={() => seleccionarIngrediente(ing)}
+                  >
+                    {ing.nombre} ({ing.unidad_medida}) - ${ing.costo}/unidad
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className='input_ingredient'>
+              <input
+                type="text"
+                className='input_form_newRecipe'
+                placeholder="Unidad de medida"
+                value={nuevoIngrediente.unidad_medida}
+                readOnly
+              />
+              <input
+                type="number"
+                className='input_form_newRecipe'
+                placeholder="Cantidad"
+                value={nuevoIngrediente.cantidad}
+                onChange={(e) =>
+                  setNuevoIngrediente({ ...nuevoIngrediente, cantidad: e.target.value })
+                }
+                step="0.01"
+                min="0.01"
+              />
+              <input
+                type="number"
+                className='input_form_newRecipe'
+                placeholder="Precio unitario"
+                value={nuevoIngrediente.costo}
+                readOnly
+              />
+
+              <div className='button_add_ingredient_wrapper'>
+                <button className='btn_add_ingredient' type="button" onClick={agregarIngrediente}>
+                  + Añadir
+                </button>
+              </div>
+            </div>
+
+            <ul>
+              {receta.ingredientes.map((ing, index) => (
+                <li key={index}>
+                  {ing.cantidad} {ing.unidad_medida} de {ing.nombre} (
+                  ${(parseFloat(ing.cantidad) * parseFloat(ing.costo)).toFixed(2)})
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className='form_group'>
+            <label>Precio estimado: ${receta.precioEstimado.toFixed(2)}</label>
+          </div>
+
+          <div className='form_group'>
+            <label>Instrucciones:</label>
+            <textarea
+              value={receta.instrucciones}
+              onChange={(e) => setReceta({ ...receta, instrucciones: e.target.value })}
+              rows={5}
+              required
+            />
+          </div>
+
           <button type="submit">Guardar Receta</button>
-          <button type="button" className="secondary">
-            Añadir imagen de la receta
-          </button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
-};
+}
 
 export default RegisterRecipe;

@@ -146,7 +146,10 @@
 
 .ingredient_table_container table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 5px;
 }
 
 .ingredient_table_container th,
@@ -154,4 +157,32 @@
   padding: 8px 12px;
   text-align: center;
   font-size: 13px;
+}
+
+.ingredient_table_container th {
+  background-color: #2ba8fb;
+  font-family: "Hammersmith One", sans-serif;
+}
+
+.tabla-empleados thead {
+  background-color: #007bff;
+  color: rgb(0, 0, 0);
+}
+
+.ingredient_table_container tbody tr:hover {
+  background-color: #92b2e9;
+}
+
+.ingredient_table_container button {
+  background-color: #35dc4b;
+  font-family: "hermesmith one", sans-serif;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ingredient_table_container button:hover {
+  background-color: #c82333;
 }

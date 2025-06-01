@@ -1,35 +1,99 @@
-.nueva-receta-container {
-  max-width: 800px;
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+
+.container_new_recipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-family: 'Hammersmith One', sans-serif;
   margin: 0 auto;
   padding: 20px;
 }
 
-.nueva-receta-container h1 {
+.conteiner_title_newRecipe {
+  text-align: center;
   color: #333;
   margin-bottom: 30px;
 }
 
-.form-group {
-  margin-bottom: 20px;
+.conteiner_form_newRecipe {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 10px;
+  border: 3px solid #eee;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 7px 0px rgb(255, 255, 255);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-.form-group label {
+.form_group label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group textarea {
+.form_group textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+  border: solid #979494 1px;
+  border-radius: 5px;
+  background: transparent;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 10px;
+  color: #000;
 }
 
-.form-group textarea {
+.ingredient_autocomplete{
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input_form_newRecipe {
+  width: 100%;
+  padding: 10px 5px;
+  border: none;
+  outline: none;
+  border: solid #979494 1px;
+  border-radius: 5px;
+  background: transparent;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 10px;
+  color: #000;
+  opacity: 0.4;
+}
+
+.input_ingredient {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  width: 100%;
+  padding: 10px 5px;
+  gap: 10px;
+  border: solid #979494 1px;
+  border-radius: 5px;
+  background: transparent;
+  font-family: "Hammersmith One", sans-serif;
+  font-size: 10px;
+  color: #000;
+}
+
+.button_add_ingredient_wrapper {
+  grid-column: 1 / -1;
+  align-content: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.form_group textarea {
   resize: vertical;
 }
 
@@ -52,48 +116,37 @@
   margin-bottom: 10px;
 }
 
-.nuevo-ingrediente button {
-  grid-column: span 4;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.nuevo-ingrediente button:hover {
-  background-color: #45a049;
-}
-
 .form-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
 }
 
-.form-actions button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+.ingredient_option {
+  font-size: 15px;
 }
 
-.form-actions button[type="submit"] {
-  background-color: #2196F3;
-  color: white;
+.btn_add_ingredient {
+  padding: 12.5px 30px;
+  border: 0;
+  border-radius: 100px;
+  background-color: #2ba8fb;
+  color: #ffffff;
+  font-family: 'Hammersmith One', sans-serif;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
 }
 
-.form-actions button[type="submit"]:hover {
-  background-color: #0b7dda;
+.btn_add_ingredient:hover {
+  background-color: #6fc5ff;
+  box-shadow: 0 0 20px #6fc5ff50;
+  transform: scale(1.1);
 }
 
-.form-actions button.secondary {
-  background-color: #f1f1f1;
-  color: #333;
-}
-
-.form-actions button.secondary:hover {
-  background-color: #ddd;
+.btn_add_ingredient:active {
+  background-color: #3d94cf;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
 }
