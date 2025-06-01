@@ -49,6 +49,61 @@ app.post('/login', async (req, res) => {
         });
     }
 });
+app.post('/agregar_usuario', async (req, res) => {
+    try {
+        const {usuario,nombre_usuario,apellido_usuario,fecha_nacimiento,correo,contraseña,rol}=req.body;
+        // 1. Validar campos requeridos
+        if (!usuario || !nombre_usuario || !apellido_usuario || !fecha_nacimiento || !correo || !contraseña || !rol) {
+            return res.status(400).json({ 
+                error: "Todos los campos (correo, contraseña, rol) son obligatorios" 
+            });
+        }
+        // 2. Validar formato de correo (opcional pero recomendado)
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+            return res.status(400).json({ 
+                error: "Formato de correo inválido" 
+            });
+        }
+        // 3. Verificar si el usuario ya existe
+        const usuarioExistente=await Usuarios.findOne({
+            where:{usuario}
+        })
+        if (usuarioExistente) {
+            return res.status(409).json({ 
+                error: "El usuario ya está registrado" 
+            });
+        }
+        const correoExistente = await Usuarios.findOne({ 
+            where: { correo } 
+        });
+        if (correoExistente) {
+            return res.status(409).json({ 
+                error: "El correo ya está registrado" 
+            });
+        }
+        // 4. Crear usuario
+        const nuevoUsuario = await Usuarios.create({usuario,nombre_usuario,apellido_usuario,fecha_nacimiento,correo,contraseña,rol});
+        // 5. Respuesta sin datos sensibles
+         return res.status(201).json({
+            usuario,nombre_usuario,correo,rol,
+            mensaje: "Usuario registrado exitosamente"
+        });
+    } catch (error) {
+        console.error("Error al registrar usuario:", error);
+        // Manejo de errores de Sequelize
+        if (error.name === "SequelizeValidationError") {
+            const errores = error.errors.map(err => ({
+                campo: err.path,
+                mensaje: err.message
+            }));
+            return res.status(400).json({ errores });
+        }
+        res.status(500).json({ 
+            error: "Error interno del servidor" 
+        });
+    }
+});
+
 app.post('/:id_usuario/gestion_ingredientes', async (req, res) => {
     try {
         const ingredientes = req.body; // Ahora espera un array
@@ -111,36 +166,6 @@ app.post('/:id_usuario/gestion_ingredientes', async (req, res) => {
         });
     }
 });
-
-
-app.post('/:id_usuario/gestion_ingredientes',async (req,res)=>{
-    try {
-
-        const {nombre,cantidad,unidad_medida,costo}= req.body;
-        const {id_usuario}=req.params;
-        // Buscar si el Ingrediente existe
-        const ingrediente = await Ingredientes.findOne({ 
-            where: { nombre } 
-        });
-        if (ingrediente) {
-                return res.status(409).json({ 
-                    error: "El ingrediente ya está registrado" 
-                });
-        }
-        //Agregar Ingrediente
-        const nuevoIngrediente = await Ingredientes.create({id_usuario,nombre,cantidad,unidad_medida,costo});
-        //Respuesta 
-        res.status(201).json({
-            nombre,cantidad,unidad_medida,costo,
-            mensaje: "Usuario registrado exitosamente"
-        });
-    } catch (error) {
-        console.error('Error al agregar ingrediente:', error);
-        res.status(500).json({ 
-            error: 'Error interno del servidor' 
-        });
-    }
-})
 
 app.get('/ver_ingredientes',async (req,res)=>{
     try {
