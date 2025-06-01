@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../AuthContext';
 import './HomeSession.css';
 import { useState } from 'react';
 
 function HomeSession() {
+    const {login} = useAuth();
     const [username, setUsername] = useState("");
     const [showUsernameError, setShowUsernameError] = useState(false);
     const [password, setPassword] = useState("");
@@ -47,15 +49,12 @@ function HomeSession() {
                 })
             });
 
-            const data = await response.json(); // Falta el await aquí
+            const data = await response.json();
+            console.log("Respuesta del servidor:", data);
 
             if (response.ok) {
-                // Redirigir a la página de bienvenida con el nombre de usuario
-                navigate('/home', { 
-                    state: { 
-                        userName: data.name || username // Usar data.name si existe, sino el username
-                    } 
-                });
+                login(data);
+                navigate('/home');
             } else {
                 setServerError(data.message || "Usuario o contraseña incorrectos");
             }

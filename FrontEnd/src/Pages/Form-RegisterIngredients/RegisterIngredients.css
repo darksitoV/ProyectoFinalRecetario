@@ -31,36 +31,23 @@
   flex: 1;
 }
 
-.user-icon {
+.content_IngredientForm {
   display: flex;
-  margin: auto 0;
-  flex-direction: column;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-}
-
-.content-IngredientForm {
-  display: flex;
-  margin-top: 10px;
-  flex-direction: column;
+  gap: 20px;
   align-items: flex-start;
-  align-items: center;
   width: 100%;
   padding: 20px;
   font-family: 'Hammersmith One', -apple-system, Roboto, Helvetica, sans-serif;
   color: #000;
   font-weight: 400;
-  height: 100%;
-  border: solid black 1px;
+  box-sizing: border-box;
 }
 
-.ingredient-form {
+.ingredient_form {
   display: flex;
   padding: 20px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   border-radius: 10px;
   border: 3px solid #eee;
@@ -68,10 +55,11 @@
   box-shadow: 0px 0px 7px 0px rgb(255, 255, 255);
   max-width: 300px;
   width: 100%;
+  max-width: 300px;
   margin: 0 auto;
 }
 
-.form-title {
+.form_title {
   text-align: center;
   padding: 10px;
   width: 100%;
@@ -79,11 +67,12 @@
   letter-spacing: 1.2px;
 }
 
-.RegisterIngredient-form-group {
+.RegisterIngredient_form_group {
   display: grid;
   flex-direction: column;
   align-content: center;
   width: 100%;
+  max-width: 300px;
 }
 
 .RegisterIngredient-form-label {
@@ -94,40 +83,23 @@
   letter-spacing: 0.4px;
 }
 
-.RegistrationIngredient-input-wrapper {
-  display: flex;
+.RegisterIngredient_form_input {
   width: 100%;
-  padding: 5px;
-  align-items: center;
-  gap: 10px;
-  border-radius: 15px;
-  border: 2px solid #33333329;
-  position: relative;
-}
-
-.RegisterIngredient-form-input {
-  width: 100%;
-  padding: 1px 5px;
+  padding: 10px 5px;
   border: none;
   outline: none;
+  border: solid #979494 1px;
+  border-radius: 5px;
   background: transparent;
   font-family: "Hammersmith One", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   color: #000;
   opacity: 0.4;
 }
 
-.RegisterIngredient-form-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 10px;
-  letter-spacing: 0.4px;
-}
-
-.RegisterIngredient-button {
+.RegisterIngredient_button {
   padding: 12.5px 30px;
+  max-width: 200px;
   border: 0;
   border-radius: 100px;
   background-color: #2ba8fb;
@@ -137,13 +109,13 @@
   -webkit-transition: all 0.5s;
 }
 
-.RegisterIngredient-button:hover {
+.RegisterIngredient_button:hover {
   background-color: #6fc5ff;
   box-shadow: 0 0 20px #6fc5ff50;
   transform: scale(1.1);
 }
 
-.RegisterIngredient-button:active {
+.RegisterIngredient_button:active {
   background-color: #3d94cf;
   transition: all 0.25s;
   -webkit-transition: all 0.25s;
@@ -151,12 +123,35 @@
   transform: scale(0.98);
 }
 
-.secondary-content {
-  display: flex;
-  min-width: 240px;
-  width: 682px;
-  flex-shrink: 1;
-  height: 669px;
-  gap: 10px;
+.ingredient_table_container {
+  border: 3px solid #eee;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.ingredient_form,
+.ingredient_table_container {
   flex: 1;
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+.ingredient_table_container h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.ingredient_table_container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ingredient_table_container th,
+.ingredient_table_container td {
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 13px;
 }

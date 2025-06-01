@@ -1,18 +1,18 @@
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../AuthContext';
 import './MainSessionStarted.css';
 
 
 function MainSessionStarted() {
 
-    const location = useLocation();
-    const userName = location.state?.userName || 'usuario';
+    const { user } = useAuth();
 
     return (
         <>
             <main class="dashboard-container">
             <div class="dashboard-inner">
                 <header>
-                <h1 class="welcome-message">¡Hola, {userName}! ¿Qué cocinaremos hoy?</h1>
+                <h1 class="welcome-message">¡Hola, {user.username}! ¿Qué cocinaremos hoy?</h1>
                 </header>
                 <section class="content-section">
                     <nav className="action-grid">

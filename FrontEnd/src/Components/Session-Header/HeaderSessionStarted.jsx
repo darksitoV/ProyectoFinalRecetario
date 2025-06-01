@@ -1,9 +1,8 @@
-import { useLocation } from 'react-router-dom';
 import './HeaderSessionStarted.css';
+import { useAuth } from '../../AuthContext';
 
 function HeaderSessionStarted() {
-    const location = useLocation();
-    const userName = location.state?.userName || 'Usuario';
+    const { user } = useAuth();
 
     return (
         <header className="site-header">
@@ -50,7 +49,7 @@ function HeaderSessionStarted() {
                         <span className="nav-text">Gastos</span>
                     </a>
                     <div className="user-profile">
-                        <span className="user-name">{userName}</span>
+                        <span className="user-name">{user.username}</span>
                         <div className="user-icon-wrapper">
                             <img
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/c2aaab3485994b1bed21dcf27b74908cf785c40d?placeholderIfAbsent=true&apiKey=d125c4bf0ab14f11b1e2846a04664086"
