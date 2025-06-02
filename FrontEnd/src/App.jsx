@@ -12,6 +12,7 @@ import HeaderSessionStarted from './Components/Session-Header/HeaderSessionStart
 import MainSessionStarted from './Pages/Main-SessionStarted/MainSessionStarted';
 import RegisterIngredients from './Pages/Form-RegisterIngredients/RegisterIngredients';
 import RegisterRecipe from './Pages/Form-RegisterRecipe/RegisterRecipe';
+import MyRecipes from './Pages/Check-Recipes/MyRecipes';
 
 
 function App() {
@@ -67,6 +68,14 @@ function App() {
               <>
                 <HeaderSessionStarted/>
                 <RegisterRecipe/>
+                <Footer/>
+              </>
+            }/>
+
+            <Route path="/home/check_my_recipes" element={
+              <>
+                <HeaderSessionStarted/>
+                <MyRecipes/>
                 <Footer/>
               </>
             }/>

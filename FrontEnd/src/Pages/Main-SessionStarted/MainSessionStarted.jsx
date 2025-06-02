@@ -53,7 +53,7 @@ function MainSessionStarted() {
                     </div>
 
                     <div className="action-card">
-                        <Link to="/consultar-recetas" className="card-link">
+                        <Link to="check_my_recipes" className="card-link">
                         <div className="bg">
                             <div className="card-content">
                             <div className="card-icon">

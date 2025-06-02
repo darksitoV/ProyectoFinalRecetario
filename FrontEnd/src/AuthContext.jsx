@@ -3,9 +3,9 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    // Estado inicial mejorado
+    
     const [authState, setAuthState] = useState(() => {
-        const storedData = localStorage.getItem('authData');
+        const storedData = sessionStorage.getItem('authData'); // <-- CAMBIADO
         return storedData ? {
             user: JSON.parse(storedData),
             isAuthenticated: true,
@@ -13,9 +13,10 @@ export function AuthProvider({ children }) {
         } : {
             user: null,
             isAuthenticated: false,
-            loading: true // Cambiado a true para inicializar en estado de carga
+            loading: true
         };
     });
+
 
     // Verificación de sesión al montar el componente
     useEffect(() => {
@@ -70,8 +71,9 @@ export function AuthProvider({ children }) {
             email: apiResponse.correo,
             role: apiResponse.rol
         };
-
-        localStorage.setItem('authData', JSON.stringify(userData));
+        // Guardar datos de usuario en sessionStorage
+       sessionStorage.setItem('authData', JSON.stringify(userData));
+        // Actualizar el estado de autenticación
         setAuthState({
             user: userData,
             isAuthenticated: true,

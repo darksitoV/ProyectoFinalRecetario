@@ -1,20 +1,52 @@
-const { DataTypes} = require('sequelize')
-const sequelize= require('../conexion')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../conexion');
 
-const recetas=sequelize.define('recetas',{
-    id_receta:{type:DataTypes.INTEGER,primaryKey:true,autoIncrement:true},
-    id_usuario:{
-        type:DataTypes.STRING,
-        references:{model:'usuarios',key:'id_usuario'},
-        onDelete:'CASCADE',
-        onUpdate:'CASCADE'
+const Recetas = sequelize.define('recetas', {
+    id_receta: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
-    nombre_receta:{type:DataTypes.STRING,unique:true},
-    tiempo_realizacion:{type:DataTypes.INTEGER},
-    precio_estimado:{type:DataTypes.DECIMAL(6,2)},
-    instrucciones:{type:DataTypes.STRING}
-},{
-    timestamps:false //NO mapear createAt y UpdateAt
-})
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'usuarios',
+            key: 'id_usuario'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    },
+    nombre_receta: {
+        type: DataTypes.STRING,
+        unique: true
+    },
+    tiempo_realizacion: {
+        type: DataTypes.INTEGER
+    },
+    precio_estimado: {
+        type: DataTypes.DECIMAL(6,2)
+    },
+    instrucciones: {
+        type: DataTypes.STRING
+    }
+}, {
+    timestamps: false,
+    tableName: 'recetas',
+    freezeTableName: true
+});
 
-module.exports=recetas;
+Recetas.associate = function(models) {
+    Recetas.belongsTo(models.Usuarios, {
+        foreignKey: 'id_usuario',
+        as: 'usuario'
+    });
+    
+    Recetas.belongsToMany(models.Ingredientes, {
+        through: models.recetas_ingredientes,
+        foreignKey: 'id_receta',
+        otherKey: 'id_ingrediente',
+        as: 'ingredientes'
+    });
+};
+
+module.exports = Recetas;

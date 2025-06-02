@@ -1,11 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser') 
 const cors = require('cors')
+const sequelize = require('./conexion') // Importar la conexión a la BD
 // Importar el modelo de la BD
 const Usuarios=require('./models/Usuarios')
 const Ingredientes=require('./models/Ingredientes')
 const Recetas=require('./models/Recetas')
-const Receta_Ingredientes=require('./models/Receta_Ingredientes')
+const recetas_ingredientes = require('./models/Receta_Ingredientes')
 const app = express()
 const puerto = 3000
 
@@ -193,40 +194,99 @@ app.get('/:id/ver_ingredientes',async (req,res)=>{
 })
 
 // Crear una nueva receta con ingredientes
-app.post('/recetas', async (req, res) => {
+app.post('/:id/recetas', async (req, res) => {
   try {
     const { receta, ingredientes } = req.body;
+    const { id } = req.params;
+
+    // Validar campos requeridos de la receta
+    const camposRequeridos = ['nombre_receta', 'tiempo_realizacion', 'instrucciones', 'precio_estimado'];
+    const faltantes = camposRequeridos.filter(campo => !receta?.[campo]);
     
-    // Crear la receta
-    const nuevaReceta = await Recetas.create(receta);
-    
-    // Agregar ingredientes si existen
-    if (ingredientes && ingredientes.length > 0) {
-      const ingredientesConIdReceta = ingredientes.map(ing => ({
-        ...ing,
-        id_receta: nuevaReceta.id_receta
-      }));
-      
-      await RecetasIngredientes.bulkCreate(ingredientesConIdReceta);
+    if (faltantes.length > 0) {
+      return res.status(400).json({ 
+        error: "Campos obligatorios faltantes",
+        camposFaltantes: faltantes
+      });
     }
-    
-    // Obtener la receta completa con sus ingredientes para la respuesta
-    const recetaCompleta = await Recetas.findByPk(nuevaReceta.id_receta, {
-      include: [RecetasIngredientes]
+
+    // Validar estructura de ingredientes si existen
+    if (ingredientes && ingredientes.length > 0) {
+      const ingredientesInvalidos = ingredientes.filter(ing => 
+        !ing.id_ingrediente || ing.cantidad == null
+      );
+      
+      if (ingredientesInvalidos.length > 0) {
+        return res.status(400).json({
+          error: "Ingredientes inválidos",
+          detalles: "Cada ingrediente debe tener id_ingrediente y cantidad"
+        });
+      }
+    }
+
+    // Crear la receta dentro de una transacción
+    const resultado = await sequelize.transaction(async (t) => {
+      const nuevaReceta = await Recetas.create({
+        ...receta,
+        id_usuario: id
+      }, { transaction: t });
+
+      // Agregar ingredientes usando el método de asociación
+      if (ingredientes && ingredientes.length > 0) {
+        await nuevaReceta.addIngredientes(
+          ingredientes.map(ing => ing.id_ingrediente),
+          {
+            through: { cantidad: ing.cantidad },
+            transaction: t
+          }
+        );
+      }
+
+      return nuevaReceta;
     });
-    
+
+    // Obtener la receta completa con sus ingredientes
+    const recetaCompleta = await Recetas.findByPk(resultado.id_receta, {
+      include: [{
+        model: Ingredientes,
+        through: { 
+          attributes: ['cantidad'],
+          where: {}, // Condición vacía para incluir todos
+          required: false
+        }
+      }]
+    });
+
     res.status(201).json(recetaCompleta);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error al crear receta:', error);
+    
+    // Mensajes de error más específicos
+    let mensajeError = 'Error interno del servidor';
+    if (error.name === 'SequelizeDatabaseError') {
+      mensajeError = 'Error de base de datos. Verifica que todas las tablas existan.';
+    } else if (error.name === 'SequelizeValidationError') {
+      mensajeError = 'Error de validación: ' + error.errors.map(e => e.message).join(', ');
+    } else if (error.name === 'SequelizeEagerLoadingError') {
+      mensajeError = 'Error al cargar relaciones. Verifica las asociaciones entre modelos.';
+    }
+
+    res.status(500).json({ 
+      error: mensajeError,
+      detalles: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 
 // Obtener todas las recetas con sus ingredientes
-app.get('/recetas', async (req, res) => {
+app.get('/:id/recetas', async (req, res) => {
   try {
+    const { id } = req.params;
+    // Buscar recetas del usuario
     const recetas = await Recetas.findAll({
-      include: [RecetasIngredientes]
-    });
+      where: { id_usuario: id },
+      include: [recetas_ingredientes]
+    });	
     res.json(recetas);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -237,7 +297,7 @@ app.get('/recetas', async (req, res) => {
 app.get('/recetas/:id_receta', async (req, res) => {
   try {
     const receta = await Recetas.findByPk(req.params.id_receta, {
-      include: [RecetasIngredientes]
+      include: [recetas_ingredientes]
     });
     
     if (!receta) {
@@ -266,7 +326,7 @@ app.put('/recetas/:id_receta', async (req, res) => {
     
     // Eliminar ingredientes existentes y agregar los nuevos
     if (ingredientes) {
-      await RecetasIngredientes.destroy({
+      await recetas_ingredientes.destroy({
         where: { id_receta }
       });
       
@@ -276,13 +336,13 @@ app.put('/recetas/:id_receta', async (req, res) => {
           id_receta
         }));
         
-        await RecetasIngredientes.bulkCreate(ingredientesConIdReceta);
+        await recetas_ingredientes.bulkCreate(ingredientesConIdReceta);
       }
     }
     
     // Obtener la receta actualizada para la respuesta
     const recetaActualizada = await Recetas.findByPk(id_receta, {
-      include: [RecetasIngredientes]
+      include: [recetas_ingredientes]
     });
     
     res.json(recetaActualizada);

@@ -17,4 +17,12 @@ const Ingredientes=sequelize.define('ingredientes',{
     timestamps:false //NO mapear createAt y UpdateAt
 })
 
+Ingredientes.associate = function(models) {
+  Ingredientes.belongsToMany(models.Recetas, {
+    through: models.recetas_ingredientes,
+    foreignKey: 'id_ingrediente',
+    otherKey: 'id_receta'
+  });
+};
+
 module.exports=Ingredientes;
