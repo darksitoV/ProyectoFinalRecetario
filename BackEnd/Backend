@@ -1,0 +1,22 @@
+
+
+
+
+{
+  "receta": {
+    "nombre_receta": "Tortilla",
+    "tiempo_realizacion": 30,
+    "precio_estimado": 50.00,
+    "instrucciones": "Batir los huevos, agregar papas, freír todo junto."
+  },
+  "ingredientes": [
+    {
+      "id_ingrediente": 1,
+      "cantidad": 3
+    },
+    {
+      "id_ingrediente": 2,
+      "cantidad": 0.5
+    }
+  ]
+}

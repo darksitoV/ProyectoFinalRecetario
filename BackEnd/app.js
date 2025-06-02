@@ -195,87 +195,50 @@ app.get('/:id/ver_ingredientes',async (req,res)=>{
 
 // Crear una nueva receta con ingredientes
 app.post('/:id/recetas', async (req, res) => {
-  try {
     const { receta, ingredientes } = req.body;
     const { id } = req.params;
 
-    // Validar campos requeridos de la receta
-    const camposRequeridos = ['nombre_receta', 'tiempo_realizacion', 'instrucciones', 'precio_estimado'];
-    const faltantes = camposRequeridos.filter(campo => !receta?.[campo]);
-    
-    if (faltantes.length > 0) {
+    // Validar campos requeridos
+    if (!receta || !ingredientes || !receta.nombre_receta || !receta.tiempo_realizacion || !receta.precio_estimado || !receta.instrucciones) {
       return res.status(400).json({ 
-        error: "Campos obligatorios faltantes",
-        camposFaltantes: faltantes
+        error: "Todos los campos de la receta son obligatorios" 
       });
     }
 
-    // Validar estructura de ingredientes si existen
-    if (ingredientes && ingredientes.length > 0) {
-      const ingredientesInvalidos = ingredientes.filter(ing => 
-        !ing.id_ingrediente || ing.cantidad == null
-      );
-      
-      if (ingredientesInvalidos.length > 0) {
-        return res.status(400).json({
-          error: "Ingredientes inválidos",
-          detalles: "Cada ingrediente debe tener id_ingrediente y cantidad"
-        });
-      }
-    }
-
-    // Crear la receta dentro de una transacción
-    const resultado = await sequelize.transaction(async (t) => {
-      const nuevaReceta = await Recetas.create({
-        ...receta,
-        id_usuario: id
-      }, { transaction: t });
-
-      // Agregar ingredientes usando el método de asociación
-      if (ingredientes && ingredientes.length > 0) {
-        await nuevaReceta.addIngredientes(
-          ingredientes.map(ing => ing.id_ingrediente),
-          {
-            through: { cantidad: ing.cantidad },
-            transaction: t
-          }
-        );
-      }
-
-      return nuevaReceta;
+    // Crear la receta
+    const nuevaReceta = await Recetas.create({
+      ...receta,
+      id_usuario: id
     });
 
+    const conocerIdReceta = await Recetas.findOne({
+      where: { id_usuario: id, nombre_receta: receta.nombre_receta }
+    });
+
+    // Validar ingredientes
+    if (!Array.isArray(ingredientes) || ingredientes.length === 0) {
+      return res.status(400).json({ 
+        error: "Se requiere al menos un ingrediente" 
+      });
+    }
+
+    // Preparar los datos de los ingredientes para insertar
+    const ingredientesConIdReceta = ingredientes.map(ing => ({
+      id_receta: conocerIdReceta.id_receta,
+      id_ingrediente: ing.id_ingrediente,
+      cantidad: ing.cantidad
+    }));
+
+    // Insertar los ingredientes asociados a la receta
+    console.log('Insertando en receta_ingredientes:', ingredientesConIdReceta);
+    await recetas_ingredientes.bulkCreate(ingredientesConIdReceta);
+
     // Obtener la receta completa con sus ingredientes
-    const recetaCompleta = await Recetas.findByPk(resultado.id_receta, {
-      include: [{
-        model: Ingredientes,
-        through: { 
-          attributes: ['cantidad'],
-          where: {}, // Condición vacía para incluir todos
-          required: false
-        }
-      }]
+    const recetaCompleta = await Recetas.findByPk(conocerIdReceta.id_receta, {
+      include: [recetas_ingredientes]
     });
 
     res.status(201).json(recetaCompleta);
-  } catch (error) {
-    console.error('Error al crear receta:', error);
-    
-    // Mensajes de error más específicos
-    let mensajeError = 'Error interno del servidor';
-    if (error.name === 'SequelizeDatabaseError') {
-      mensajeError = 'Error de base de datos. Verifica que todas las tablas existan.';
-    } else if (error.name === 'SequelizeValidationError') {
-      mensajeError = 'Error de validación: ' + error.errors.map(e => e.message).join(', ');
-    } else if (error.name === 'SequelizeEagerLoadingError') {
-      mensajeError = 'Error al cargar relaciones. Verifica las asociaciones entre modelos.';
-    }
-
-    res.status(500).json({ 
-      error: mensajeError,
-      detalles: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
 });
 
 // Obtener todas las recetas con sus ingredientes
