@@ -4,9 +4,7 @@ const cors = require('cors')
 const sequelize = require('./conexion') // Importar la conexión a la BD
 // Importar el modelo de la BD
 const Usuarios=require('./models/Usuarios')
-const Ingredientes=require('./models/Ingredientes')
-const Recetas=require('./models/Recetas')
-const recetas_ingredientes = require('./models/Receta_Ingredientes')
+const { Recetas, Ingredientes, Receta_Ingredientes } = require('./models/index'); // Importar los modelos
 const app = express()
 const puerto = 3000
 
@@ -193,9 +191,39 @@ app.get('/:id/ver_ingredientes',async (req,res)=>{
   }
 })
 
+app.put('/ingredientes/id', async (req, res) => {
+  try {
+    const { nombre, cantidad, unidad_medida, costo } = req.body;
+    const actualizado = await Usuarios.update(
+      { nombre ,cantidad, unidad_medida, costo },
+      { where: { id_ingrediente: req.params.id } }
+    );
+    res.json(actualizado);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/ingredientes/:id', async (req, res) => {
+  try {
+    const deleted = await Ingredientes.destroy({
+      where: { id_ingrediente: req.params.id }
+    });
+    
+    if (!deleted) {
+      return res.status(404).json({ error: 'Receta no encontrada' });
+    }
+    
+    res.status(204).send(); // 204 No Content
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Crear una nueva receta con ingredientes
 app.post('/:id/recetas', async (req, res) => {
-    const { receta, ingredientes } = req.body;
+    try {
+      const { receta, ingredientes } = req.body;
     const { id } = req.params;
 
     // Validar campos requeridos
@@ -231,14 +259,13 @@ app.post('/:id/recetas', async (req, res) => {
 
     // Insertar los ingredientes asociados a la receta
     console.log('Insertando en receta_ingredientes:', ingredientesConIdReceta);
-    await recetas_ingredientes.bulkCreate(ingredientesConIdReceta);
+    await Receta_Ingredientes.bulkCreate(ingredientesConIdReceta);
 
-    // Obtener la receta completa con sus ingredientes
-    const recetaCompleta = await Recetas.findByPk(conocerIdReceta.id_receta, {
-      include: [recetas_ingredientes]
-    });
-
-    res.status(201).json(recetaCompleta);
+    res.status(201).json(receta,ingredientes);
+    } catch (error) {
+      console.error('Error al crear receta:', error);
+      res.status(500).json({ error: error.message });
+    }
 });
 
 // Obtener todas las recetas con sus ingredientes

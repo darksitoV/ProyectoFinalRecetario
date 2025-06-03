@@ -1,7 +1,8 @@
-const { DataTypes} = require('sequelize')
-const sequelize= require('../conexion')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../conexion');
+const recetas_ingredientes = require('./Receta_Ingredientes'); // Importa el modelo intermedio
 
-const Ingredientes=sequelize.define('ingredientes',{
+const Ingredientes = sequelize.define('ingredientes', {
     id_ingrediente:{type:DataTypes.INTEGER,primaryKey:true,autoIncrement:true},
     nombre:{type:DataTypes.STRING(20),unique:true},
     cantidad:DataTypes.DECIMAL(6,3),
@@ -13,16 +14,17 @@ const Ingredientes=sequelize.define('ingredientes',{
         onDelete:'CASCADE',
         onUpdate:'CASCADE'
     }
-},{
-    timestamps:false //NO mapear createAt y UpdateAt
-})
+}, {
+    timestamps: false
+});
 
 Ingredientes.associate = function(models) {
-  Ingredientes.belongsToMany(models.Recetas, {
-    through: models.recetas_ingredientes,
-    foreignKey: 'id_ingrediente',
-    otherKey: 'id_receta'
-  });
+    Ingredientes.belongsToMany(models.Recetas, {
+        through: models.Receta_Ingredientes,
+        foreignKey: 'id_ingrediente',
+        otherKey: 'id_receta',
+        as: 'recetas'
+    });
 };
 
-module.exports=Ingredientes;
+module.exports = Ingredientes;
