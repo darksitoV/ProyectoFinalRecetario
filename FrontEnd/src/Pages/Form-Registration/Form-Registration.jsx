@@ -141,7 +141,7 @@ function Form_Registration() {
     };
 
     try {
-        const response = await fetch("http://localhost:3000/agregar_usuario", {
+        const response = await fetch("https://proyectofinalrecetario.onrender.com/agregar_usuario", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
