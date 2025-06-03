@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../conexion');
-const recetas_ingredientes = require('./Receta_Ingredientes'); // Importa el modelo intermedio
+const Receta_Ingredientes = require('./Receta_Ingredientes');
 
 const Ingredientes = sequelize.define('ingredientes', {
     id_ingrediente:{type:DataTypes.INTEGER,primaryKey:true,autoIncrement:true},

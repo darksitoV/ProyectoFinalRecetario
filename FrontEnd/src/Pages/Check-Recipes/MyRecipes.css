@@ -1,20 +1,22 @@
-.my-recipes-container {
+.my_recipes_container {
   padding: 20px;
+  font-family: "Hammersmith One", sans-serif;
 }
 
-.my-recipes-header {
+.title_myRecipes {
+  color: #000;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.my_recipes_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
-
-.back-button {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 8px 16px;
-  cursor: pointer;
-  border-radius: 4px;
 }
 
 .recipe-grid {
@@ -25,6 +27,7 @@
 
 .recipe-card {
   border: 1px solid #ccc;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
   padding: 16px;
   height: 150px;
   border-radius: 6px;
@@ -36,9 +39,87 @@
 
 .recipe-info h3 {
   margin: 0 0 8px 0;
-  font-size: 16px;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 
 .recipe-info p {
   margin: 4px 0;
+}
+
+/* Estilos para el modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.recipe-details {
+  margin-top: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.detail-section {
+  margin-top: 1.5rem;
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ingredients-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.ingredient-name {
+  flex: 2;
+}
+
+.ingredient-quantity {
+  flex: 1;
+  text-align: right;
+  padding-right: 1rem;
+}
+
+.ingredient-cost {
+  flex: 1;
+  text-align: right;
+  color: #666;
 }

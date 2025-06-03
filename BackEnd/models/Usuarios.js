@@ -1,7 +1,7 @@
 const { DataTypes} = require('sequelize')
 const sequelize= require('../conexion')
 
-const usuarios=sequelize.define('usuarios',{
+const Usuarios=sequelize.define('usuarios',{
     id_usuario:{type:DataTypes.INTEGER,primaryKey:true,autoIncrement:true},
     usuario:{type:DataTypes.STRING(20), unique:true},
     nombre_usuario:{type:DataTypes.STRING(50)},
@@ -14,4 +14,16 @@ const usuarios=sequelize.define('usuarios',{
     timestamps:false //NO mapear createAt y UpdateAt
 })
 
-module.exports=usuarios;
+
+// Asociación: Un usuario tiene muchas recetas e ingredientes
+Usuarios.associate = function(models) {
+    Usuarios.hasMany(models.Recetas, {
+        foreignKey: 'id_usuario',
+        as: 'recetas'
+    });
+    Usuarios.hasMany(models.Ingredientes, {
+        foreignKey: 'id_usuario',
+        as: 'ingredientes'
+    });
+};
+module.exports=Usuarios;

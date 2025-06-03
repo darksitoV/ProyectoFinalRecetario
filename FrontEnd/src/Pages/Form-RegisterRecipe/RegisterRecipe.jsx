@@ -108,6 +108,13 @@ function RegisterRecipe() {
         console.log('Receta guardada exitosamente:', data);
         alert('¡Receta guardada!');
         // Opcional: Redirigir o limpiar el formulario
+        setReceta({
+          nombre_receta: '',
+          tiempo_realizacion: 30,
+          ingredientes: [],
+          instrucciones: '',
+          precio_estimado: 0
+        });
       } else {
         console.error('Error del servidor:', data.error);
         alert(`Error: ${data.error}`);
@@ -133,7 +140,7 @@ function RegisterRecipe() {
               type="text"
               className='input_form_newRecipe'
               value={receta.nombre_receta}
-              onChange={(e) => setReceta({ ...receta, nombre_receta: e.target.value })}
+              onChange={(e) => setReceta({ ...receta, nombre_receta: e.target.value.toUpperCase()})}
               required
             />
           </div>

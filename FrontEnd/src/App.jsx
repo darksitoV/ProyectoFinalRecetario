@@ -13,6 +13,7 @@ import MainSessionStarted from './Pages/Main-SessionStarted/MainSessionStarted';
 import RegisterIngredients from './Pages/Form-RegisterIngredients/RegisterIngredients';
 import RegisterRecipe from './Pages/Form-RegisterRecipe/RegisterRecipe';
 import MyRecipes from './Pages/Check-Recipes/MyRecipes';
+import UpdateIngredients from './Pages/Form-UpdateIngredientes/UpdateIngredients';
 
 
 function App() {
@@ -76,6 +77,14 @@ function App() {
               <>
                 <HeaderSessionStarted/>
                 <MyRecipes/>
+                <Footer/>
+              </>
+            }/>
+
+            <Route path="/home/update_ingredients" element={
+              <>
+                <HeaderSessionStarted/>
+                <UpdateIngredients/>
                 <Footer/>
               </>
             }/>

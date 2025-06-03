@@ -3,8 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const sequelize = require('./conexion') // Importar la conexión a la BD
 // Importar el modelo de la BD
-const Usuarios=require('./models/Usuarios')
-const { Recetas, Ingredientes, Receta_Ingredientes } = require('./models/index'); // Importar los modelos
+const { Usuarios, Recetas, Ingredientes, Receta_Ingredientes } = require('./models/index'); // Importar los modelos
 const app = express()
 const puerto = 3000
 
@@ -191,35 +190,72 @@ app.get('/:id/ver_ingredientes',async (req,res)=>{
   }
 })
 
-app.put('/ingredientes/id', async (req, res) => {
+app.put('/:idUser/:idIngredient/ingredientes', async (req, res) => {
   try {
-    const { nombre, cantidad, unidad_medida, costo } = req.body;
-    const actualizado = await Usuarios.update(
-      { nombre ,cantidad, unidad_medida, costo },
-      { where: { id_ingrediente: req.params.id } }
-    );
+    const { idUser, idIngredient } = req.params;
+    const { cantidad, unidad_medida, costo } = req.body;
+    const actualizado = await Ingredientes.update(
+      { cantidad, unidad_medida, costo },
+      { where: { id_ingrediente: idIngredient, id_usuario: idUser } 
+    });
     res.json(actualizado);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.delete('/ingredientes/:id', async (req, res) => {
+app.delete('/:iduser/ingredientes/:idingredient', async (req, res) => {
   try {
-    const deleted = await Ingredientes.destroy({
-      where: { id_ingrediente: req.params.id }
+    const { iduser, idingredient } = req.params;
+
+    // 1. Buscar todas las recetas asociadas a este ingrediente
+    const relaciones = await Receta_Ingredientes.findAll({
+      where: { id_ingrediente: idingredient }
     });
-    
-    if (!deleted) {
-      return res.status(404).json({ error: 'Receta no encontrada' });
+
+    // 2. Para cada receta, recalcular el costo
+    for (const rel of relaciones) {
+      const id_receta = rel.id_receta;
+
+      // Obtener todos los ingredientes restantes de la receta (excluyendo el que se va a borrar)
+      const ingredientesRestantes = await Receta_Ingredientes.findAll({
+        where: { id_receta, id_ingrediente: idingredient }
+      });
+
+      // Sumar el costo de los ingredientes restantes
+      let nuevoCosto = 0;
+      for (const ingRel of ingredientesRestantes) {
+        const ingrediente = await Ingredientes.findByPk(ingRel.id_ingrediente);
+        if (ingrediente) {
+          // Multiplica el costo unitario por la cantidad usada en la receta
+          nuevoCosto += parseFloat(ingrediente.costo) * parseFloat(ingRel.cantidad);
+        }
+      }
+
+      // Actualizar el precio_estimado de la receta
+      await Recetas.update(
+        { precio_estimado: nuevoCosto },
+        { where: { id_receta } }
+      );
     }
-    
-    res.status(204).send(); // 204 No Content
+
+    // 3. Eliminar relaciones y el ingrediente
+    await Receta_Ingredientes.destroy({
+      where: { id_ingrediente: idingredient }
+    });
+    const deleted = await Ingredientes.destroy({
+      where: { id_ingrediente: idingredient, id_usuario: iduser }
+    });
+
+    if (!deleted) {
+      return res.status(404).json({ error: 'ingrediente no encontrado' });
+    }
+
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
-
 // Crear una nueva receta con ingredientes
 app.post('/:id/recetas', async (req, res) => {
     try {
@@ -272,16 +308,25 @@ app.post('/:id/recetas', async (req, res) => {
 app.get('/:id/recetas', async (req, res) => {
   try {
     const { id } = req.params;
-    // Buscar recetas del usuario
+
     const recetas = await Recetas.findAll({
       where: { id_usuario: id },
-      include: [recetas_ingredientes]
-    });	
+      include: [
+        {
+          model: Ingredientes,
+          as: 'ingredientes',
+          through: { attributes: [] }
+        }
+      ]
+    });
+
     res.json(recetas);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Obtener una receta específica con sus ingredientes
 app.get('/recetas/:id_receta', async (req, res) => {

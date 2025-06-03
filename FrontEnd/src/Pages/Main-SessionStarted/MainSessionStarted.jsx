@@ -71,7 +71,7 @@ function MainSessionStarted() {
                     </div>
 
                     <div className="action-card">
-                        <Link to="/presupuesto" className="card-link">
+                        <Link to="update_ingredients" className="card-link">
                         <div className="bg">
                             <div className="card-content">
                             <div className="card-icon">
