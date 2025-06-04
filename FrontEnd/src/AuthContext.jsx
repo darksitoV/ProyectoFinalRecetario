@@ -110,7 +110,7 @@ const updateUser = async (updatedData) => {
         endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_correo/${userId}`;
         payload = { nuevoCorreo: updatedData.email };
     } else if (updatedData.password) {
-        endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_contraseña/${userId}`;
+        endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_password/${userId}`;
         payload = { nuevaContraseña: updatedData.password };
     } else {
         console.warn("No se especificó ningún campo válido para actualizar.");
