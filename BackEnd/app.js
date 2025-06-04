@@ -7,10 +7,7 @@ const { Usuarios, Recetas, Ingredientes, Receta_Ingredientes } = require('./mode
 const app = express()
 const puerto = 3000
 
-app.use(cors({
-  origin: 'http://localhost:5173',  // 👈 tu frontend local
-  credentials: true
-}));
+app.use(cors());
 app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 3000;
