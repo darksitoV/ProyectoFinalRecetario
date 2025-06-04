@@ -104,7 +104,7 @@ const updateUser = async (updatedData) => {
     let payload = {};
 
     if (updatedData.username) {
-        endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_nombreUsuario/${userId}`;
+        endpoint = `http://localhost:3000/actualizar_nombreUsuario/${userId}`;
         payload = { usuario: updatedData.username };
     } else if (updatedData.email) {
         endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_correo/${userId}`;
@@ -127,20 +127,29 @@ const updateUser = async (updatedData) => {
             body: JSON.stringify(payload)
         });
 
-        console.log(response)
         if (!response.ok) {
-            throw new Error("Error al actualizar el dato");
+            const err = await response.json();
+            throw new Error(err.error || "Error al actualizar");
         }
 
-        // Actualizar estado local solo si no es password
+        // Actualizar estado local solo si no es contraseña
         if (!updatedData.password) {
-            const newUserData = { ...authState.user, ...updatedData };
+            const newUserData = {
+                ...authState.user,
+                ...(
+                    updatedData.username
+                        ? { username: updatedData.username }
+                        : updatedData.email
+                        ? { email: updatedData.email }
+                        : {}
+                )
+            };
             setAuthState({
                 user: newUserData,
                 isAuthenticated: true,
                 loading: false
             });
-            localStorage.setItem('authData', JSON.stringify(newUserData));
+            sessionStorage.setItem('authData', JSON.stringify(newUserData));
         }
 
     } catch (error) {
@@ -148,6 +157,7 @@ const updateUser = async (updatedData) => {
         throw error;
     }
 };
+
 
     // Limpieza de datos (ahora es privada)
     const clearAuthData = () => {

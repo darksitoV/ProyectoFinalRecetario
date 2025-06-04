@@ -11,13 +11,13 @@ function HeaderSessionStarted() {
     const toggleMenu = () => setShowMenu(!showMenu);
     const closeModal = () => setModalField(null);
 
-    const handleSave = (newValue) => {
+    const handleSave = async (newValue) => {
         if (modalField === 'username') {
-            updateUser({ username: newValue });
+            await updateUser({ username: newValue });
         } else if (modalField === 'email') {
-            updateUser({ email: newValue });
+           await updateUser({ email: newValue });
         } else if (modalField === 'password') {
-            updateUser({ password: newValue });
+           await updateUser({ password: newValue });
         }
         closeModal();
     };

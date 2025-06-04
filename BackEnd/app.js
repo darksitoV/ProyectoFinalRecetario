@@ -7,8 +7,27 @@ const { Usuarios, Recetas, Ingredientes, Receta_Ingredientes } = require('./mode
 const app = express()
 const puerto = 3000
 
-app.use(cors());
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://localhost:5173'], // Reemplaza con tu URL de frontend
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json())
+
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: true, // Para HTTPS
+    sameSite: 'none', // Necesario para cross-origin
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 1 día
+  }
+}));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
@@ -47,6 +66,7 @@ app.post('/login', async (req, res) => {
         });
     }
 });
+
 app.post('/agregar_usuario', async (req, res) => {
     try {
         const {usuario,nombre_usuario,apellido_usuario,fecha_nacimiento,correo,contraseña,rol}=req.body;
