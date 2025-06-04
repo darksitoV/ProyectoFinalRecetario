@@ -1,10 +1,16 @@
 {
   "hosting": {
-    "public": "FrontEnd/dist",
+    "public": "FrontEnd/dist", // o el nombre correcto de tu carpeta generada por Vite
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }
