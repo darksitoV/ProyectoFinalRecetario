@@ -10,7 +10,7 @@ const puerto = 3000
 const corsOptions = {
   origin: [
     'http://localhost:5173', // para desarrollo local
-    'https://TU-FRONTEND-DEPLOY.onrender.com' // reemplaza por tu frontend real en producción
+    `https://proyectofinalrecetario-2-3.web.app`, // para producción
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -206,7 +206,7 @@ app.put('/actualizar_correo/:id', async (req, res) => {
   }
 });
 
-app.put('/actualizar_contraseña/:id', async (req, res) => {
+app.put('/actualizar_password/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { nuevaContraseña } = req.body;
