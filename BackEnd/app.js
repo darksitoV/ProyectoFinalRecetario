@@ -8,13 +8,15 @@ const app = express()
 const puerto = 3000
 
 const corsOptions = {
-  origin: ['http://localhost:3000',
-    'https://proyectofinalrecetario.onrender.com',
-    'http://localhost:5173'],
+  origin: [
+    'http://localhost:5173', // para desarrollo local
+    'https://TU-FRONTEND-DEPLOY.onrender.com' // reemplaza por tu frontend real en producción
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
+
 
 app.use(cors(corsOptions));
 
@@ -24,11 +26,12 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: true,
+    secure: false,
     sameSite: 'none',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000
   }
+
 }));
 
 const PORT = process.env.PORT || 3000;
