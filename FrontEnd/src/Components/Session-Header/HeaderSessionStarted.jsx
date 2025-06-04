@@ -1,10 +1,35 @@
 import './HeaderSessionStarted.css';
 import { useAuth } from '../../AuthContext';
+import EditUserModal from '../EditUser/EditUserModal';
+import { useState } from 'react';
 
 function HeaderSessionStarted() {
-    const { user } = useAuth();
+    const { user, updateUser, logout } = useAuth();
+    const [showMenu, setShowMenu] = useState(false);
+    const [modalField, setModalField] = useState(null); // username | email | password
+
+    const toggleMenu = () => setShowMenu(!showMenu);
+    const closeModal = () => setModalField(null);
+
+    const handleSave = (newValue) => {
+        if (modalField === 'username') {
+            updateUser({ username: newValue });
+        } else if (modalField === 'email') {
+            updateUser({ email: newValue });
+        } else if (modalField === 'password') {
+            // Aquí podrías hacer una llamada al backend para cambiar contraseña
+            console.log("Nueva contraseña:", newValue);
+            // Opcional: agregar alerta de éxito
+        }
+        closeModal();
+    };
+    const handleLogout = async () => {
+        await logout();
+        window.location.href = '/login';
+    };
 
     return (
+        <>
         <header className="site-header">
             <nav className="main-nav">
                 <div className="brand-container">
@@ -17,38 +42,14 @@ function HeaderSessionStarted() {
                     </div>
                     <h1 className="site-title">Mi Recetario.com</h1>
                 </div>
+
                 <div className="nav-links">
-                    <a href="#" className="nav-item">
-                        <div className="nav-icon-wrapper">
-                            <img
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8898f37546d94ae624a3bffc3bd66539d886f397?placeholderIfAbsent=true&apiKey=d125c4bf0ab14f11b1e2846a04664086"
-                                alt="Inventory Icon"
-                                className="nav-icon"
-                            />
-                        </div>
-                        <span className="nav-text">Inventario</span>
-                    </a>
-                    <a href="#" className="nav-item">
-                        <div className="nav-icon-wrapper">
-                            <img
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8898f37546d94ae624a3bffc3bd66539d886f397?placeholderIfAbsent=true&apiKey=d125c4bf0ab14f11b1e2846a04664086"
-                                alt="Recipes Icon"
-                                className="nav-icon"
-                            />
-                        </div>
-                        <span className="nav-text">Recetas</span>
-                    </a>
-                    <a href="#" className="nav-item">
-                        <div className="nav-icon-wrapper">
-                            <img
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8898f37546d94ae624a3bffc3bd66539d886f397?placeholderIfAbsent=true&apiKey=d125c4bf0ab14f11b1e2846a04664086"
-                                alt="Expenses Icon"
-                                className="nav-icon"
-                            />
-                        </div>
-                        <span className="nav-text">Gastos</span>
-                    </a>
-                    <div className="user-profile">
+                    {/* Otras secciones */}
+                    <a href="#" className="nav-item">Inventario</a>
+                    <a href="#" className="nav-item">Recetas</a>
+                    <a href="#" className="nav-item">Gastos</a>
+
+                    <div className="user-profile" onClick={toggleMenu}>
                         <span className="user-name">{user.username}</span>
                         <div className="user-icon-wrapper">
                             <img
@@ -57,11 +58,37 @@ function HeaderSessionStarted() {
                                 className="user-icon"
                             />
                         </div>
+
+                {showMenu && (
+                    <div className="user-dropdown">
+                        <button onClick={() => setModalField('username')}>Cambiar usuario</button>
+                        <button onClick={() => setModalField('email')}>Cambiar email</button>
+                        <button onClick={() => setModalField('password')}>Cambiar contraseña</button>
+                        <button onClick={handleLogout}>Cerrar sesión</button>
+                    </div>
+                )}
                     </div>
                 </div>
             </nav>
+
+            {modalField && (
+                <EditUserModal
+                    field={modalField}
+                    label={
+                        modalField === 'username'
+                            ? 'Nuevo nombre de usuario'
+                            : modalField === 'email'
+                            ? 'Nuevo email'
+                            : 'Nueva contraseña'
+                    }
+                    value={modalField !== 'password' ? user[modalField] : ''}
+                    onSave={handleSave}
+                    onClose={closeModal}
+                />
+            )}
         </header>
-    )
+        </>
+    );
 }
 
 export default HeaderSessionStarted;

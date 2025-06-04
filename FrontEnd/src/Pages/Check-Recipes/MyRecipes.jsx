@@ -16,7 +16,7 @@ const MyRecipes = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/${user.id}/recetas`);
+        const response = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/recetas`);
         
         if (!response.ok) {
           throw new Error('No se pudo obtener las recetas');

@@ -29,7 +29,7 @@ function RegisterRecipe() {
   useEffect(() => {
     const obtenerIngredientes = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/${user.id}/ver_ingredientes`);
+        const res = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/ver_ingredientes`);
         const data = await res.json();
         console.log("Ingredientes recibidos:", data); // <-- AÑADE ESTA LÍNEA
         setIngredientesDB(data);
@@ -94,7 +94,7 @@ function RegisterRecipe() {
 
     try {
       console.log(recipeData)
-      const response = await fetch(`http://localhost:3000/${user.id}/recetas`, {
+      const response = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/recetas`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

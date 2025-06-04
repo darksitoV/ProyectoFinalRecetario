@@ -20,7 +20,7 @@ function UpdateIngredients() {
     useEffect(() => {
         const fetchIngredients = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/${user.id}/ver_ingredientes`);
+                const response = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/ver_ingredientes`);
                 if (!response.ok) throw new Error('No se pudieron cargar los ingredientes');
                 const data = await response.json();
                 const formattedIngredients = data.map(ing => ({
@@ -68,7 +68,7 @@ function UpdateIngredients() {
         };
 
         try {
-            const res = await fetch(`http://localhost:3000/${user.id}/${formData.id}/ingredientes`, {
+            const res = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/${formData.id}/ingredientes`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedIngredient)
@@ -94,7 +94,7 @@ function UpdateIngredients() {
 
     const deleteIngredient = async (id) => {
         try {
-            const response = await fetch(`http://localhost:3000/${user.id}/ingredientes/${id}`, {
+            const response = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/ingredientes/${id}`, {
                 method: "DELETE"
             });
             if (!response.ok) throw new Error('Error al eliminar el ingrediente');

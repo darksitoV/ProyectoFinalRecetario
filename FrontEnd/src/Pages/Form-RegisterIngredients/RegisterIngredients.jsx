@@ -57,7 +57,7 @@ const saveToDatabase = async () => {
             costo: ing.price
         }));
 
-        const res = await fetch(`http://localhost:3000/${user.id}/gestion_ingredientes`, {
+        const res = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/gestion_ingredientes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formattedIngredients),
