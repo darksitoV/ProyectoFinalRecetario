@@ -7,7 +7,10 @@ const { Usuarios, Recetas, Ingredientes, Receta_Ingredientes } = require('./mode
 const app = express()
 const puerto = 3000
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',  // 👈 tu frontend local
+  credentials: true
+}));
 app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 3000;
@@ -105,17 +108,17 @@ app.post('/agregar_usuario', async (req, res) => {
 app.put('/actualizar_nombreUsuario/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { nuevoNombreUsuario } = req.body;
+        const { usuario } = req.body;
 
         // Validar que el nuevo nombre de usuario no esté vacío
-        if (!nuevoNombreUsuario) {
+        if (!usuario) {
             return res.status(400).json({ 
                 error: "El nuevo nombre de usuario es obligatorio" 
             });
         }
 
         // Buscar el usuario por ID
-        const usuario = await Usuarios.findByPk(id);
+        const nombre_usuario = await Usuarios.findByPk(id);
         if (!usuario) {
             return res.status(404).json({ 
                 error: "Usuario no encontrado" 
@@ -123,12 +126,12 @@ app.put('/actualizar_nombreUsuario/:id', async (req, res) => {
         }
 
         // Actualizar el nombre de usuario
-        usuario.usuario = nuevoNombreUsuario;
-        await usuario.save();
+        nombre_usuario.usuario = usuario;
+        await nombre_usuario.save();
 
         res.json({ 
             mensaje: "Nombre de usuario actualizado correctamente", 
-            usuario: { id: usuario.id, nombre_usuario: usuario.usuario } 
+            usuario: { id: usuario.id, nombre_usuario: nombre_usuario.usuario } 
         });
     } catch (error) {
         console.error('Error al actualizar nombre de usuario:', error);
@@ -308,11 +311,44 @@ app.get('/:id/ver_ingredientes',async (req,res)=>{
 app.put('/:idUser/:idIngredient/ingredientes', async (req, res) => {
   try {
     const { idUser, idIngredient } = req.params;
-    const { cantidad, unidad_medida, costo } = req.body;
+    const { nombre, cantidad, unidad_medida, costo } = req.body;
+
+    // 1. Actualizar el ingrediente
     const actualizado = await Ingredientes.update(
-      { cantidad, unidad_medida, costo },
-      { where: { id_ingrediente: idIngredient, id_usuario: idUser } 
+      { nombre, cantidad, unidad_medida, costo },
+      { where: { id_ingrediente: idIngredient, id_usuario: idUser } }
+    );
+
+    // 2. Buscar todas las recetas que usan este ingrediente
+    const relaciones = await Receta_Ingredientes.findAll({
+      where: { id_ingrediente: idIngredient }
     });
+
+    // 3. Para cada receta, recalcular el precio_estimado
+    for (const rel of relaciones) {
+      const id_receta = rel.id_receta;
+
+      // Obtener todos los ingredientes de la receta
+      const ingredientesReceta = await Receta_Ingredientes.findAll({
+        where: { id_receta }
+      });
+
+      let nuevoCosto = 0;
+      for (const ingRel of ingredientesReceta) {
+        const ingrediente = await Ingredientes.findByPk(ingRel.id_ingrediente);
+        if (ingrediente) {
+          // Si el costo es unitario, solo multiplica:
+          nuevoCosto += parseFloat(ingrediente.costo) * parseFloat(ingRel.cantidad);
+        }
+      }
+
+      // Actualizar el precio_estimado de la receta
+      await Recetas.update(
+        { precio_estimado: nuevoCosto },
+        { where: { id_receta } }
+      );
+    }
+
     res.json(actualizado);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -334,7 +370,10 @@ app.delete('/:iduser/ingredientes/:idingredient', async (req, res) => {
 
       // Obtener todos los ingredientes restantes de la receta (excluyendo el que se va a borrar)
       const ingredientesRestantes = await Receta_Ingredientes.findAll({
-        where: { id_receta, id_ingrediente: idingredient }
+        where: { 
+          id_receta, 
+          id_ingrediente: { [Op.ne]: idingredient } // <-- Aquí está el cambio clave
+        }
       });
 
       // Sumar el costo de los ingredientes restantes
@@ -342,7 +381,7 @@ app.delete('/:iduser/ingredientes/:idingredient', async (req, res) => {
       for (const ingRel of ingredientesRestantes) {
         const ingrediente = await Ingredientes.findByPk(ingRel.id_ingrediente);
         if (ingrediente) {
-          // Multiplica el costo unitario por la cantidad usada en la receta
+          // Si el costo es total, calcula el unitario:
           nuevoCosto += parseFloat(ingrediente.costo) * parseFloat(ingRel.cantidad);
         }
       }
@@ -352,6 +391,8 @@ app.delete('/:iduser/ingredientes/:idingredient', async (req, res) => {
         { precio_estimado: nuevoCosto },
         { where: { id_receta } }
       );
+      const recetaActualizada = await Recetas.findByPk(id_receta);
+      console.log(`Receta ${id_receta} nuevo precio_estimado:`, recetaActualizada.precio_estimado);
     }
 
     // 3. Eliminar relaciones y el ingrediente
@@ -371,6 +412,7 @@ app.delete('/:iduser/ingredientes/:idingredient', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 // Crear una nueva receta con ingredientes
 app.post('/:id/recetas', async (req, res) => {
     try {
