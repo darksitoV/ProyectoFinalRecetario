@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser') 
 const cors = require('cors')
-const sequelize = require('./conexion') // Importar la conexión a la BD
+const { Op } = require('sequelize'); // Importar Op para operaciones con Sequelize
 // Importar el modelo de la BD
 const { Usuarios, Recetas, Ingredientes, Receta_Ingredientes } = require('./models/index'); // Importar los modelos
 const app = express()
@@ -506,38 +506,55 @@ app.get('/recetas/:id_receta', async (req, res) => {
 app.put('/recetas/:id_receta', async (req, res) => {
   try {
     const { receta, ingredientes } = req.body;
-    const{id_receta}=req.params;
-    // Actualizar la receta
+    const { id_receta } = req.params;
+
+    // 1. Actualizar la receta (sin ingredientes)
     const [updated] = await Recetas.update(receta, {
       where: { id_receta }
     });
-    
+
     if (!updated) {
       return res.status(404).json({ error: 'Receta no encontrada' });
     }
-    
-    // Eliminar ingredientes existentes y agregar los nuevos
+
+    // 2. Actualizar ingredientes asociados a la receta
     if (ingredientes) {
-      await recetas_ingredientes.destroy({
+      await Receta_Ingredientes.destroy({
         where: { id_receta }
       });
-      
+
       if (ingredientes.length > 0) {
         const ingredientesConIdReceta = ingredientes.map(ing => ({
           ...ing,
           id_receta
         }));
-        
-        await recetas_ingredientes.bulkCreate(ingredientesConIdReceta);
+        await Receta_Ingredientes.bulkCreate(ingredientesConIdReceta);
       }
     }
-    
-    // Obtener la receta actualizada para la respuesta
-    const recetaActualizada = await Recetas.findByPk(id_receta, {
-      include: [recetas_ingredientes]
+
+    // 3. Recalcular el precio_estimado de la receta
+    const ingredientesReceta = await Receta_Ingredientes.findAll({
+      where: { id_receta }
     });
-    
-    res.json(recetaActualizada);
+
+    let nuevoCosto = 0;
+    for (const ingRel of ingredientesReceta) {
+      const ingrediente = await Ingredientes.findByPk(ingRel.id_ingrediente);
+      if (ingrediente) {
+        // Si el costo es unitario, solo multiplica:
+        nuevoCosto += parseFloat(ingrediente.costo) * parseFloat(ingRel.cantidad);
+      }
+    }
+
+    await Recetas.update(
+      { precio_estimado: nuevoCosto },
+      { where: { id_receta } }
+    );
+
+    res.json({
+      mensaje: "Receta actualizada correctamente",
+      receta: { id_receta, ...receta ,ingredientes}
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
