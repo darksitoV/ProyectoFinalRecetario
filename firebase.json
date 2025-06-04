@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "FrontEnd/dist", // o el nombre correcto de tu carpeta generada por Vite
+    "public": "FrontEnd/dist",
     "ignore": [
       "firebase.json",
       "**/.*",
