@@ -104,7 +104,7 @@ const updateUser = async (updatedData) => {
     let payload = {};
 
     if (updatedData.username) {
-        endpoint = `http://localhost:3000/actualizar_nombreUsuario/${userId}`;
+        endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_nombreUsuario/${userId}`;
         payload = { usuario: updatedData.username };
     } else if (updatedData.email) {
         endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_correo/${userId}`;
@@ -123,7 +123,6 @@ const updateUser = async (updatedData) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body: JSON.stringify(payload)
         });
 

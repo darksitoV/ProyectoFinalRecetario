@@ -42,10 +42,6 @@ function HeaderSessionStarted() {
                 </div>
 
                 <div className="nav-links">
-                    {/* Otras secciones */}
-                    <a href="#" className="nav-item">Inventario</a>
-                    <a href="#" className="nav-item">Recetas</a>
-                    <a href="#" className="nav-item">Gastos</a>
 
                     <div className="user-profile" onClick={toggleMenu}>
                         <span className="user-name">{user.username}</span>
