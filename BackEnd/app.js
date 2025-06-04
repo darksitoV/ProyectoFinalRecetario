@@ -102,6 +102,121 @@ app.post('/agregar_usuario', async (req, res) => {
     }
 });
 
+app.put('/actualizar_nombreUsuario/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nuevoNombreUsuario } = req.body;
+
+        // Validar que el nuevo nombre de usuario no esté vacío
+        if (!nuevoNombreUsuario) {
+            return res.status(400).json({ 
+                error: "El nuevo nombre de usuario es obligatorio" 
+            });
+        }
+
+        // Buscar el usuario por ID
+        const usuario = await Usuarios.findByPk(id);
+        if (!usuario) {
+            return res.status(404).json({ 
+                error: "Usuario no encontrado" 
+            });
+        }
+
+        // Actualizar el nombre de usuario
+        usuario.usuario = nuevoNombreUsuario;
+        await usuario.save();
+
+        res.json({ 
+            mensaje: "Nombre de usuario actualizado correctamente", 
+            usuario: { id: usuario.id, nombre_usuario: usuario.usuario } 
+        });
+    } catch (error) {
+        console.error('Error al actualizar nombre de usuario:', error);
+        res.status(500).json({ 
+            error: "Error interno del servidor" 
+        });
+    }
+});
+
+app.put('/actualizar_correo/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nuevoCorreo } = req.body;
+
+    // Validar que el nuevo correo no esté vacío
+    if (!nuevoCorreo) {
+      return res.status(400).json({
+        error: "El nuevo correo es obligatorio"
+      });
+    }
+
+    // Validar formato de correo
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nuevoCorreo)) {
+      return res.status(400).json({
+        error: "Formato de correo inválido"
+      });
+    }
+
+    // Buscar el usuario por ID
+    const usuario = await Usuarios.findByPk(id);
+    if (!usuario) {
+      return res.status(404).json({
+        error: "Usuario no encontrado"
+      });
+    }
+
+    // Actualizar el correo
+    usuario.correo = nuevoCorreo;
+    await usuario.save();
+
+    res.json({
+      mensaje: "Correo actualizado correctamente",
+      usuario: { id: usuario.id, correo: usuario.correo }
+    });
+  } catch (error) {
+    console.error('Error al actualizar correo:', error);
+    res.status(500).json({
+      error: "Error interno del servidor"
+    });
+  }
+});
+
+app.put('/actualizar_contraseña/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nuevaContraseña } = req.body;
+
+    // Validar que la nueva contraseña no esté vacía
+    if (!nuevaContraseña) {
+      return res.status(400).json({
+        error: "La nueva contraseña es obligatoria"
+      });
+    }
+
+    // Buscar el usuario por ID
+    const usuario = await Usuarios.findByPk(id);
+    if (!usuario) {
+      return res.status(404).json({
+        error: "Usuario no encontrado"
+      });
+    }
+
+    // Actualizar la contraseña
+    usuario.contraseña = nuevaContraseña;
+    await usuario.save();
+
+    res.json({
+      mensaje: "Contraseña actualizada correctamente",
+      usuario: { id: usuario.id, correo: usuario.correo }
+    });
+  } catch (error) {
+    console.error('Error al actualizar contraseña:', error);
+    res.status(500).json({
+      error: "Error interno del servidor"
+    });
+  }
+});
+
 app.post('/:id_usuario/gestion_ingredientes', async (req, res) => {
     try {
         const ingredientes = req.body; // Ahora espera un array
