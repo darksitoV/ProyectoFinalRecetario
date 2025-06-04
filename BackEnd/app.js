@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const session = require('express-session')
 const { Op } = require('sequelize'); // Importar Op para operaciones con Sequelize
 // Importar el modelo de la BD
 const { Usuarios, Recetas, Ingredientes, Receta_Ingredientes } = require('./models/index'); // Importar los modelos
@@ -227,8 +228,10 @@ app.put('/actualizar_password/:id', async (req, res) => {
     }
 
     // Actualizar la contraseña
-    usuario.contraseña = nuevaContraseña;
-    await usuario.save();
+    await Usuarios.update(
+      { contraseña: nuevaContraseña },
+      { where: { id_usuario: id } }
+    );
 
     res.json({
       mensaje: "Contraseña actualizada correctamente",
