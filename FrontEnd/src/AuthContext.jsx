@@ -96,27 +96,58 @@ export function AuthProvider({ children }) {
     };
 
 // Actualizar usuario con validación
-    const updateUser = (updatedData) => {
-        if (!authState.user) return;
+const updateUser = async (updatedData) => {
+    if (!authState.user) return;
 
-        const newUserData = { 
-            ...authState.user, 
-            ...updatedData 
-        };
+    const userId = authState.user.id;
+    let endpoint = '';
+    let payload = {};
 
-        // Validar campos requeridos
-        if (!newUserData.id || !newUserData.email) {
-            throw new Error("Datos de usuario incompletos");
-        }
+    if (updatedData.username) {
+        endpoint = `http://http://localhost:3000/actualizar_nombreUsuario/${userId}`;
+        payload = { usuario: updatedData.username };
+    } else if (updatedData.email) {
+        endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_correo/${userId}`;
+        payload = { nuevoCorreo: updatedData.email };
+    } else if (updatedData.password) {
+        endpoint = `https://proyectofinalrecetario.onrender.com/actualizar_contraseña/${userId}`;
+        payload = { nuevaContraseña: updatedData.password };
+    } else {
+        console.warn("No se especificó ningún campo válido para actualizar.");
+        return;
+    }
 
-        setAuthState({
-            user: newUserData,
-            isAuthenticated: true,
-            loading: false
+    try {
+        const response = await fetch(endpoint, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(payload)
         });
 
-        localStorage.setItem('authData', JSON.stringify(newUserData));
-    };
+        console.log(response)
+        if (!response.ok) {
+            throw new Error("Error al actualizar el dato");
+        }
+
+        // Actualizar estado local solo si no es password
+        if (!updatedData.password) {
+            const newUserData = { ...authState.user, ...updatedData };
+            setAuthState({
+                user: newUserData,
+                isAuthenticated: true,
+                loading: false
+            });
+            localStorage.setItem('authData', JSON.stringify(newUserData));
+        }
+
+    } catch (error) {
+        console.error("Error actualizando el usuario:", error);
+        throw error;
+    }
+};
 
     // Limpieza de datos (ahora es privada)
     const clearAuthData = () => {

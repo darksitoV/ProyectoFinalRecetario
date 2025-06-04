@@ -17,9 +17,7 @@ function HeaderSessionStarted() {
         } else if (modalField === 'email') {
             updateUser({ email: newValue });
         } else if (modalField === 'password') {
-            // Aquí podrías hacer una llamada al backend para cambiar contraseña
-            console.log("Nueva contraseña:", newValue);
-            // Opcional: agregar alerta de éxito
+            updateUser({ password: newValue });
         }
         closeModal();
     };

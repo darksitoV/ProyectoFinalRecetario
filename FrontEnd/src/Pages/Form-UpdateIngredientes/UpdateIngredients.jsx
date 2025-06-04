@@ -94,7 +94,7 @@ function UpdateIngredients() {
 
     const deleteIngredient = async (id) => {
         try {
-            const response = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/ingredientes/${id}`, {
+            const response = await fetch(`http://localhost:3000/${user.id}/ingredientes/${id}`, {
                 method: "DELETE"
             });
             if (!response.ok) throw new Error('Error al eliminar el ingrediente');
