@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const session = require('express-session')
+// const session = require('express-session')
 const { Op } = require('sequelize'); // Importar Op para operaciones con Sequelize
 // Importar el modelo de la BD
 const { Usuarios, Recetas, Ingredientes, Receta_Ingredientes } = require('./models/index'); // Importar los modelos
@@ -23,17 +23,17 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json())
 
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    sameSite: 'none',
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
-  }
+// app.use(session({
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     secure: false,
+//     sameSite: 'none',
+//     httpOnly: true,
+//     maxAge: 24 * 60 * 60 * 1000
+//   }
 
-}));
+// }));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
