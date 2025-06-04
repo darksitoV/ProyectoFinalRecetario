@@ -220,7 +220,9 @@ function UpdateIngredients() {
                                 </table>
                             </>
                         ) : (
-                            <p>No hay ingredientes registrados</p>
+                            <p>No hay ingredientes registrados
+                                <BackButton></BackButton>
+                            </p>
                         )}
                     </div>
                 </div>
