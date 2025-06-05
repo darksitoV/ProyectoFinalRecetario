@@ -17,13 +17,13 @@ const MyRecipes = () => {
     const fetchRecipes = async () => {
       try {
         const response = await fetch(`https://proyectofinalrecetario.onrender.com/${user.id}/recetas`);
-        
+
         if (!response.ok) {
           throw new Error('No se pudo obtener las recetas');
         }
-        
+
         const data = await response.json();
-        
+
         if (Array.isArray(data)) {
           setRecipes(data);
         } else {
@@ -49,6 +49,25 @@ const MyRecipes = () => {
     setSelectedRecipe(null);
   };
 
+
+  const handleDelete = async (id_receta) => {
+    if (!window.confirm('¿Estás seguro de que deseas eliminar esta receta?')) return;
+
+    try {
+      const response = await fetch(`https://proyectofinalrecetario.onrender.com/recetas/${id_receta}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Error al eliminar la receta');
+
+      // Eliminar la receta del estado local
+      setRecipes((prev) => prev.filter((r) => r.id_receta !== id_receta));
+    } catch (err) {
+      alert(`No se pudo eliminar: ${err.message}`);
+    }
+  };
+
+
   if (loading) {
     return <div>{loadingComponent()}</div>;
   }
@@ -61,21 +80,26 @@ const MyRecipes = () => {
     <div className="my_recipes_container">
       <div className="my_recipes_header">
         <h2 className='title_myRecipes'>Mis Recetas</h2>
-        <BackButton/>
+        <BackButton />
       </div>
-      
+
       <div className="recipe-grid">
         {recipes.length > 0 ? (
           recipes.map((recipe) => (
-            <div 
-              key={recipe.id_receta} 
-              className="recipe-card" 
+            <div
+              key={recipe.id_receta}
+              className="recipe-card"
               onClick={() => handleRecipeClick(recipe)}
             >
               <div className="recipe-info">
                 <h3>{recipe.nombre_receta || 'Nombre no disponible'}</h3>
                 <p>Tiempo: {recipe.tiempo_realizacion} min</p>
                 <p>${parseFloat(recipe.precio_estimado || 0).toFixed(2)}</p>
+              </div>
+              <div>
+                <button className="delete-button" onClick={() => handleDelete(recipe.id_receta)}>
+                  Eliminar
+                </button>
               </div>
             </div>
           ))
@@ -89,27 +113,27 @@ const MyRecipes = () => {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closeModal}>×</button>
-            
+
             <h2>{selectedRecipe.nombre_receta}</h2>
-            
+
             <div className="recipe-details">
               <div className="detail-row">
                 <span>Tiempo de realización:</span>
                 <span>{selectedRecipe.tiempo_realizacion} minutos</span>
               </div>
-              
+
               <div className="detail-row">
                 <span>Precio estimado:</span>
                 <span>${parseFloat(selectedRecipe.precio_estimado || 0).toFixed(2)}</span>
               </div>
-              
+
               {selectedRecipe.instrucciones && (
                 <div className="detail-section">
                   <h3>Instrucciones:</h3>
                   <p>{selectedRecipe.instrucciones}</p>
                 </div>
               )}
-              
+
               <div className="detail-section">
                 <h3>Ingredientes:</h3>
                 {selectedRecipe.ingredientes && selectedRecipe.ingredientes.length > 0 ? (
@@ -118,9 +142,11 @@ const MyRecipes = () => {
                       <li key={ingrediente.id_ingrediente}>
                         <span className="ingredient-name">{ingrediente.nombre}</span>
                         <span className="ingredient-quantity">
-                          {ingrediente.cantidad} {ingrediente.unidad_medida}
+                          {ingrediente.cantidad_usada} {ingrediente.unidad_medida}
                         </span>
-                        <span className="ingredient-cost">(${ingrediente.costo})</span>
+                        <span className="ingredient-cost">
+                          x ${parseFloat(ingrediente.costo_unitario).toFixed(2)} = ${parseFloat(ingrediente.precio_usado).toFixed(2)}
+                        </span>
                       </li>
                     ))}
                   </ul>

@@ -81,7 +81,7 @@ function MainSessionStarted() {
                                 className="icon"
                                 />
                             </div>
-                            <span className="card-title">Presupuesto</span>
+                            <span className="card-title">Consultar Ingredientes</span>
                             </div>
                         </div>
                         <div className="blob"></div>

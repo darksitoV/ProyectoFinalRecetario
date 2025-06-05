@@ -606,7 +606,7 @@ app.delete('/recetas/:id', async (req, res) => {
       return res.status(404).json({ error: 'Receta no encontrada' });
     }
 
-    res.status(204).send(); // 204 No Content
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

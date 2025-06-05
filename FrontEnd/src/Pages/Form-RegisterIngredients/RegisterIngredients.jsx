@@ -131,6 +131,7 @@ const saveToDatabase = async () => {
                     >
                         <option value="" disabled>Seleccione</option>
                         <option value="Kg">Kg</option>
+                        <option value="Lt">Pz</option>
                         <option value="Pz">Pz</option>
                     </select>
                     </div>
