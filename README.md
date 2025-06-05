@@ -3,22 +3,33 @@ Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos
 
 ## Índice
 
-- [URL DEL SISTEMA (CLICK AL ENLACE PARA IR AL SISTEMA)](#url-del-sistema-click-al-enlace-para-ir-al-sistema)
-- [Documentacion Tecnica](#documentacion-tecnica)
-- [Guia de uso (Video)](#guia-de-uso-video)
-- [Equipo de trabajo](#--equipo-de-trabajo--)
-- [GUIA DE USO RAPIDA](#guia-de-uso-rapida)
-  - [Pagina Principal](#pagina-principal)
-  - [Pagina Registro](#pagina-registro)
-  - [Pagina Iniciar Sesion](#pagina-iniciar-sesion)
-  - [Pagina Menu](#pagina-menu)
-  - [Gestion de ingredientes](#gestion-de-ingredientes)
-  - [Crear Receta](#crear-receta)
-  - [Consultar Receta](#consultar-receta)
-  - [Consultar Ingrediente](#consultar-ingrediente)
-  - [Editar informacion de usuario](#editar-informacion-de-usuario)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Servidores + Hosts](#servidores--hosts)
+## 📚 Índice de Contenidos
+
+🔗 **[URL del sistema](#url-del-sistema-click-al-enlace-para-ir-al-sistema)**
+
+📄 **[Documentación Técnica](#documentacion-tecnica)**
+- 🗂️ Casos de Uso
+- 📑 Análisis del Proyecto
+
+🎥 **[Guía de Uso (Video)](#guia-de-uso-video)**
+
+👥 **[Equipo de Trabajo](#--equipo-de-trabajo--)**
+
+🚀 **[Guía de Uso Rápida](#guia-de-uso-rapida)**
+- 🏠 [Página Principal](#pagina-principal)
+- 📝 [Página Registro](#pagina-registro)
+- 🔐 [Página Iniciar Sesión](#pagina-iniciar-sesion)
+- 🍽️ [Página Menú](#pagina-menu)
+- 🧺 [Gestión de Ingredientes](#gestion-de-ingredientes)
+- 👨‍🍳 [Crear Receta](#crear-receta)
+- 📋 [Consultar Receta](#consultar-receta)
+- 🧾 [Consultar Ingrediente](#consultar-ingrediente)
+- ⚙️ [Editar Información de Usuario](#editar-informacion-de-usuario)
+
+🛠️ **[Tecnologías Utilizadas](#tecnologias-utilizadas)**
+
+🌐 **[Servidores + Hosts](#servidores--hosts)**
+
 
 ### URL DEL SISTEMA (CLICK AL ENLACE PARA IR AL SISTEMA)
 ## https://proyectofinalrecetario-2-3.web.app/
