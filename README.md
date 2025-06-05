@@ -43,15 +43,15 @@ Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos
 # GUIA DE USO RAPIDA
 
 ## Pagina Principal
-Se cuentan con 2 apartados si no tienes aun una cuenta tendras que registrarte en caso de tenerla seleccionar iniciar sesion 
+Se cuentan con 2 apartados si no tienes una cuenta tendras que registrarte, en caso de tenerla seleccionar iniciar sesion 
 ![main](imgs/main.jpg)
 
 ## Pagina Registro
-Es colocar tus datos personales, tus datos de usuario, y por ultimo tu rol ya sea ama de casa o cheft 
+Es colocar tus datos personales, tus datos de usuario, y por ultimo tu ocupacion ya sea ama de casa o cheft esto es para determinar para que proposito quieres el sistema. 
 ![registro](imgs/registro.jpg)
 
 ## Pagina Iniciar Sesion
-Colocar tu nombre de usuario y tu contrasena
+Colocar tu nombre de usuario y tu contrasena e ingresar :D.
 ![login](imgs/login.jpg)
 
 ## Pagina Menu 
@@ -64,12 +64,25 @@ Colocar tu nombre de usuario y tu contrasena
 
 ## Gestion de ingredientes
 En este apartado se puede crear un stock de ingredientes para utilizar en las recetas
+* Paso 1.- Rellenar la siguiente informacion en el formulario y presionar agregar a la tabla.
+  * Nombre del ingrediente
+  * Cantidad
+  * Unidad
+  * Precio por Unidad
+* Paso 2.- Si estas seguro de que la informacion es correcta puedes presionar el boton verde **"Guardar en base de datos"** y ya quedaria registrado.
+* Paso Alternativo.- Botones Eliminar o Editar
 
 ![gestion_ingredientes](imgs/gestion_ingredientes.jpg)
 
 ## Crear Receta
-En este apartado se pueden crear nuevas recetas.
-**Restriccion:** Para crear una receta es obligatorio que haya ingredientes creados anteriormente.
+En este apartado se pueden crear nuevas recetas
+Se tiene que rellenar la siguient informacion
+  * Nombre de la receta:
+  * Tiempo de preparación (min):
+  * Ingredientes.
+para buscar ingrediente, se busca por su nombre y se presiona anadir de esta forma queda guardado y se agrega tambien el coste.
+
+**Restriccion:** Para crear una receta es obligatorio que haya  por lo menos 1 ingrediente creado anteriormente.
 ![crear_receta](imgs/crear_receta.jpg)
 
 ## Consultar Receta
