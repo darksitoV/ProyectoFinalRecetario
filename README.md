@@ -1,6 +1,17 @@
 # Proyecto Recetario y Costeos
 Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos 
 
+## Integrantes 
+* Cárdenas Soto Genaro Isaac 
+* Guerrero Romero José Miguel
+* Pacheco trujillo jesus martin
+* Zaragoza Cervantes Javier Esau
+* Palafox Espinoza Miguel Angel
+* Pérez Lizárraga Carlos Alexis
+
+### URL DEL SISTEMA 
+https://proyectofinalrecetario-2-3.web.app/
+
 ## Tecnologias Utilizadas 
 
 * **React** (FrontEnd)
