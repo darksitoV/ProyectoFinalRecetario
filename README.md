@@ -7,10 +7,11 @@ Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos
 
 ## Documentacion Tecnica 
 * ![Análisis del negocio casos de uso](imgs/casos_uso.pdf)
-* ![Análisis del negocio](imgs/analisis.pdf)
+* ![Análisis del negocio proyecto](imgs/analisis.pdf)
 
 ## Guia de uso (Video)
 * ![video](https://drive.google.com/file/d/1N_TFwwpKlz_qFMea56u3Elr_uXDj302U/view?usp=drive_link)
+  
 ## - Equipo de trabajo -
 * Cárdenas Soto Genaro Isaac (Tester)
 * Guerrero Romero José Miguel (Desarrollador)
