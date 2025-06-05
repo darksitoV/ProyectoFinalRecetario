@@ -478,18 +478,41 @@ app.get('/:id/recetas', async (req, res) => {
   try {
     const { id } = req.params;
 
+    // Obtener todas las recetas del usuario
     const recetas = await Recetas.findAll({
-      where: { id_usuario: id },
-      include: [
-        {
-          model: Ingredientes,
-          as: 'ingredientes',
-          through: { attributes: [] }
-        }
-      ]
+      where: { id_usuario: id }
     });
 
-    res.json(recetas);
+    // Para cada receta, obtener sus ingredientes y calcular el precio usado
+    const recetasConIngredientes = [];
+    for (const receta of recetas) {
+      // Obtener ingredientes y cantidades de la receta
+      const relaciones = await Receta_Ingredientes.findAll({
+        where: { id_receta: receta.id_receta }
+      });
+
+      const ingredientes = [];
+      for (const rel of relaciones) {
+        const ingrediente = await Ingredientes.findByPk(rel.id_ingrediente);
+        if (ingrediente) {
+          ingredientes.push({
+            id_ingrediente: ingrediente.id_ingrediente,
+            nombre: ingrediente.nombre,
+            unidad_medida: ingrediente.unidad_medida,
+            costo_unitario: parseFloat(ingrediente.costo),
+            cantidad_usada: parseFloat(rel.cantidad),
+            precio_usado: parseFloat(ingrediente.costo) * parseFloat(rel.cantidad)
+          });
+        }
+      }
+
+      recetasConIngredientes.push({
+        ...receta.toJSON(),
+        ingredientes
+      });
+    }
+
+    res.json(recetasConIngredientes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
