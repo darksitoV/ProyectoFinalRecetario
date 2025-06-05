@@ -1,6 +1,9 @@
 # Proyecto Recetario y Costeos
 Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos 
 
+## Índice
+- [url_sistema](#URL DEL SISTEMA (CLICK AL ENLACE PARA IR AL SISTEMA))
+
 ### URL DEL SISTEMA (CLICK AL ENLACE PARA IR AL SISTEMA)
 ## https://proyectofinalrecetario-2-3.web.app/
 
@@ -60,6 +63,11 @@ En este apartado se puede verfiicar cuales son las recetas que tengo almacenadas
 ## Consultar Ingrediente 
 Este apartado te permite verficar los ingredientes que tienes almacenados, asi como poder actualizarlos desde el boton editar y el boton eliminar para poder eliminar ese ingrediente de la BD.
 ![consultar_ingrediente](imgs/consultar_ingrediente.jpg)
+
+## Editar informacion de usuario
+Al presionar en tu nombre de usario que aparece en la esquina podras cambiar tanto tu nombre de usuario como correo como contrasena las veces que quieras.
+**Restriccion:** No puede haber nombre de usaurio repetidos y correos.
+![editar](imgs/editar.jpg)
 
 
 ## Tecnologias Utilizadas 
