@@ -12,7 +12,7 @@ Proyecto Final DEIS, Elaboracion de un sistema de recetas y costeos
   - [Pagina Registro](#pagina-registro)
   - [Pagina Iniciar Sesion](#pagina-iniciar-sesion)
   - [Pagina Menu](#pagina-menu)
-  - [Gestion de ingredientes](#gestion-de-ingredientes)
+  - [Agregar de ingredientes](#agregar-de-ingredientes)
   - [Crear Receta](#crear-receta)
   - [Consultar Receta](#consultar-receta)
   - [Consultar Ingrediente](#consultar-ingrediente)
@@ -62,7 +62,7 @@ Colocar tu nombre de usuario y tu contrasena
 
 ![menu](imgs/menu.jpg)
 
-## Gestion de ingredientes
+## Agregar ingredientes
 En este apartado se puede crear un stock de ingredientes para utilizar en las recetas
 
 ![gestion_ingredientes](imgs/gestion_ingredientes.jpg)
